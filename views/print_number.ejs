@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!--begin::Head-->
+	<head><base href="../../../">
+		<meta charset="utf-8" />
+		<title>Print Number</title>
+		<meta name="description" content="User datatable listing" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Theme Styles(used by all pages)-->
+		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+        <style>
+			.aside-secondary-enabled.aside-fixed .wrapper {
+    			padding-left: 0;
+			}
+			.aside-secondary-enabled .aside {
+    			width: 0;
+			}	
+
+            @media print {
+              #printButton{
+                display: none;
+              }
+			  #token_card{
+				  width: 450px !important;
+				  height: 450px !important;
+			  }
+			  #numbertext{
+				  font-size: 150px !important;
+				  margin-top: 20px !important;
+				  line-height: 1;
+				
+				 
+			  }
+			  #ongointext{
+				  font-size: 50px !important;
+				width: 100% !important;
+				text-align: justify !important;
+						
+			  }
+			  #appointmentNumbertext{		
+				margin-top: -20px !important;		  
+				font-size: 35px !important;
+				width: 100% !important;
+				text-align: justify !important;
+				margin-left: 20px !important;
+				color: black !important;
+			  }
+			  #datetext{
+				  font-size: 20px !important;
+				  
+				color: black;
+			  }
+			  #cardbodyid{
+				margin-top: -20px !important;
+			  }
+			  #cdhedder{
+				  height: 100px !important;
+				  min-height: 100px !important;
+				  margin-top: -10px !important;
+				  border-bottom: 2px solid rgb(61, 61, 61);
+			  }
+            }
+
+
+		</style>
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body"  style="background-color: white;">
+		<!--begin::Main-->
+		<div>
+			<!--begin::Card-->
+			
+			<div class="card card-custom card-stretch" id="token_card" style="width: 500px; height: 580px;" >
+				
+				<!--begin::Header-->
+				<div class="card-header " id="cdhedder">
+					<div style="margin:0px auto;display: block;position: inherit;">
+						
+						<span style="font-size: 30px; width: 100%; text-align: justify !important;" id="appointmentNumbertext">Total Dental Care</span><br>
+						<label id="datetext" style=" width: 100%; text-align: center; ">Date : <%=date%></label><br>
+					</div>
+				</div>
+				<!--end::Header-->			   
+				<!--begin::Body-->
+				<div class="card-body" id="cardbodyid" style="margin-bottom:10px;border-bottom: 1px black dotted;">  					
+					<center>
+						
+						<span style="font-size: 30px;" id="ongointext">Token</span><br>
+						<span style="font-size: 200px;" id="numbertext"><%=number%></span><br>
+					
+						
+						<span style="font-size: 20px;text-align: justify;font-weight:500 !important;margin-top: 20px; width: 60%;">Kindly have a seat and</span><br>
+						<span style="font-size: 20px;text-align: justify;font-weight:500 !important; width: 60%;">wait for your turn</span>
+					</center>
+					
+				</div>
+				<!--end::Body-->
+			</div>
+		
+		<div>
+			<div style="float:right; width: 80%;">
+				<button type="submit" id="printButton" class="btn btn-danger mr-2" onclick="printNumber();">Print Number</button>
+			</div>
+		</div>
+			<!--end::Card-->
+		</div>
+		
+	<!--begin::Global Theme Bundle(used by all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<script src="assets/js/pages/crud/datatables/basic/paginations.js"></script>
+
+		<!--end::Page Scripts-->
+	</body>
+	<!--end::Body-->
+
+	<script>
+		function printNumber(){
+			window.print();
+			window. close();
+		}
+	</script>
+</html>

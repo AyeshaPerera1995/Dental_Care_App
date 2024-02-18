@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!--begin::Head-->
+	<head><base href="../../../">
+		<meta charset="utf-8" />
+		<title><%=sub_title%></title>
+		<meta name="description" content="User datatable listing" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Theme Styles(used by all pages)-->
+		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+        <style>
+			.aside-secondary-enabled.aside-fixed .wrapper {
+    			padding-left: 0;
+			}
+			.aside-secondary-enabled .aside {
+    			width: 0;
+			}	
+			.table-responsive {
+			width: 91%;;
+			}
+
+			
+			#ui-id-1{
+				top: -752.797px;
+    			left: 334.844px;
+    			list-style: none;
+    			background: white;
+    			cursor: pointer;
+    			border: 0.5px solid lightgray;
+    			position: relative;
+    			max-width: 677px;
+    			width: 679.328px;
+    			display: none;
+				line-height: 30px;
+			}
+
+			.disable-click{
+    			pointer-events:none;
+			}
+
+		</style>
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading">
+		<!--begin::Main-->
+		<!-- MOBILE HEADER -->
+		<%- include('includes/mobile_header.ejs'); %>
+
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Page-->
+			<div class="d-flex flex-row flex-column-fluid page">
+
+                <!-- NAV BAR  -->
+                <%- include('includes/navbar.ejs'); %>
+
+				<!--begin::Wrapper-->
+				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+					<!--begin::Content-->
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+                        <!--begin::Subheader-->
+						<div class="subheader py-3 py-lg-8 subheader-transparent" id="kt_subheader">
+							<div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+							
+								<!-- HEADER  -->
+								<%- include('includes/header.ejs'); %>
+
+							</div>
+						</div>
+						<!--end::Subheader-->
+
+						<!--begin::Entry-->
+						<div class="d-flex flex-column-fluid">
+							<!--begin::Container-->
+							<div class="container">
+                                 <!--begin::Form-->
+                            <form class="form" method="post" action="/invoices/add_invoice">
+								<!--begin::Card-->
+                                <div class="card card-custom card-stretch">
+                                    
+                                    <!--begin::Header-->
+                                    <div class="card-header py-3">
+                                        <div class="card-title align-items-start flex-column">
+											 <span class="text-muted font-weight-bold"><%=sub_title%></span>
+                                        </div>
+                                        <div class="card-toolbar">
+											<div class="input-group-prepend">
+												<span class="svg-icon svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo3\dist/../src/media/svg/icons\Files\File-plus.svg-->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+													<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+														<polygon points="0 0 24 0 24 24 0 24"></polygon>
+														<path d="M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+														<path d="M11,14 L9,14 C8.44771525,14 8,13.5522847 8,13 C8,12.4477153 8.44771525,12 9,12 L11,12 L11,10 C11,9.44771525 11.4477153,9 12,9 C12.5522847,9 13,9.44771525 13,10 L13,12 L15,12 C15.5522847,12 16,12.4477153 16,13 C16,13.5522847 15.5522847,14 15,14 L13,14 L13,16 C13,16.5522847 12.5522847,17 12,17 C11.4477153,17 11,16.5522847 11,16 L11,14 Z" fill="#000000"></path>
+													</g>
+												    </svg><!--end::Svg Icon-->
+                                                </span>
+											</div>
+                                        </div>
+                                    </div>
+                                    <!--end::Header-->
+                                   
+                                        <!--begin::Body-->
+                                        <div class="card-body">                                      
+                                            <div class="form-group row">
+												<input type="hidden" name="id" value="">
+												<input type="hidden" name="patient_id" value="">
+                                                <label class="col-xl-2 col-lg-3 col-form-label">Appoinment Number</label>
+                                                <div class="col-lg-9 col-xl-3">													
+                                                    <input class="form-control form-control-lg form-control-solid" type="text" name ="app_number" readonly value="<%=invoice_data.appointment_number%>" placeholder="Appoinment Number"/>													
+												</div>
+												<div class="col-xl-1 col-lg-3 col-form-label"></div>
+												<label class="col-xl-2 col-lg-3 col-form-label">Patient Name</label>
+                                                <div class="col-lg-9 col-xl-3">													
+                                                    <input class="form-control form-control-lg form-control-solid" type="text" name ="patient_name" readonly value="<%=invoice_data.patient_name%>" placeholder="Patient Name"/>												
+												</div>
+                                            </div>   
+											<div class="form-group row">
+                                                <label class="col-xl-2 col-lg-3 col-form-label">Patient Type</label>
+                                                <div class="col-lg-9 col-xl-3">													
+                                                    <input class="form-control form-control-lg form-control-solid" type="text" name ="patient_type" readonly value="<%=invoice_data.patient_type%>" placeholder="Patient Type"/>													
+												</div>
+												<div class="col-xl-1 col-lg-3 col-form-label"></div>
+												<label class="col-xl-2 col-lg-3 col-form-label">Contact Number</label>
+                                                <div class="col-lg-9 col-xl-3">													
+                                                    <input class="form-control form-control-lg form-control-solid" type="text" name ="contact" readonly value="<%=invoice_data.patient_contact_no%>" placeholder="Contact Number"/>												
+												</div>
+                                            </div>  
+											<hr>                                           
+                                           
+											<!-- drug table -->
+											<div class="table-responsive">
+												<table class="table table-head-custom table-vertical-center table-head-bg table-bordered">
+													<thead>
+														<tr class="text-left">
+															<th style="min-width: 250px; text-align: center;" class="pl-7">
+																<span class="text-dark-75">Drug</span>
+															</th>
+															<th style="min-width: 250px; text-align: center;" class="pl-7">
+																<span class="text-dark-75">Dosage</span>
+															</th>														
+														</tr>
+													</thead>
+													<tbody>
+                                                        <% 
+                                                            var list = invoice_data.line_items;
+                                                            for(var i = 0 ; i < list.length ; i++) {  	
+                                                            %>
+                                                            <tr>
+                                                                <td><%=list[i].drug_name%></td>
+                                                                <td><%=list[i].dosage%></td>
+                                                            </tr>
+														<% } %>
+													</tbody>
+												</table>
+											</div>
+
+											<!-- drug table  -->
+											<hr>
+											<div class="form-group row">
+                                                <label class="col-xl-2 col-lg-3 col-form-label">Other Notes</label>
+                                                <div class="col-lg-9 col-xl-9">													
+                                                   <textarea class="form-control" name="notes" readonly cols="90" rows="5"><%=invoice_data.other_note%></textarea>													
+												</div>												
+                                            </div>  
+											<hr>
+											<!-- billing details  -->
+											<div class="form-group row">      
+												<label class="col-xl-2 col-lg-3 col-form-label">Payment Method</label>                                        
+												<div class="col-xl-4 col-lg-3 col-form-label">
+													<div class="radio-inline">                                                     
+														<label class="radio radio-solid">
+														<input type="radio" name="payment_method" value="Card" <%= invoice_data.payment_method == 'Card' ? 'checked':'' %> disabled/>
+														<span></span>Card</label>
+														<label class="radio radio-solid set-disable">
+														<input type="radio" name="payment_method" value="Cash" <%= invoice_data.payment_method == 'Cash' ? 'checked':'' %>  disabled/>
+														<span></span>Cash</label>
+													</div>
+												</div>
+												<label class="col-xl-2 col-lg-3 col-form-label">Total Payable</label>
+                                                <div class="col-lg-9 col-xl-3">													
+                                                    <input class="form-control form-control-lg form-control-solid" readonly type="text" name ="total" value="<%=invoice_data.total_amount%>" style="text-align: right;" placeholder="0.00"/>												
+												</div>
+                                            </div>   
+											<div class="form-group row">                                               
+												<div class="col-xl-6 col-lg-3 col-form-label"></div>
+												<label class="col-xl-2 col-lg-3 col-form-label">Paid Amount</label>
+                                                <div class="col-lg-9 col-xl-3">													
+                                                    <input class="form-control form-control-lg form-control-solid" readonly type="text" name ="paid" value="<%=invoice_data.paid_amount%>.00" style="text-align: right;" placeholder="0.00"/>												
+												</div>
+                                            </div>   
+											<div class="form-group row">     
+												<div class="col-xl-6 col-lg-3 col-form-label"></div>                                          												
+												<label class="col-xl-2 col-lg-3 col-form-label">Invoice Balance</label>
+                                                <div class="col-lg-9 col-xl-3">													
+                                                    <input class="form-control form-control-lg form-control-solid" type="text" name ="balance" readonly value="<%=invoice_data.balance%>" style="text-align: right;" placeholder="0.00"/>												
+												</div>
+                                            </div>   
+											<hr>
+											<div class="form-group row"> 
+                                            	<label class="col-xl-3 col-lg-3 checkbox checkbox-danger">
+													Next Appointment Date
+												</label>
+												<div class="col-lg-9 col-xl-3">	
+                                                   										
+													<input class="form-control form-control-lg form-control-solid" readonly="true" value="<%=invoice_data.next_appointment_date%>" name ="app_date"/>											
+												</div>												
+                                            </div>
+
+                                        </div>
+                                        <!--end::Body-->
+
+										<div class="card-footer">
+                                            <div style="float: right;">
+												<a class="btn btn-success mr-2 open-PayHistoryDialog" data-toggle="modal" data-id="<%=invoice_data.invoice_no%>" href="#payHistoryDialog">View Payment History</a>
+												<a href="/invoices/print_invoice/<%=invoice_data.appointment_id%>" class="btn btn-danger mr-2">Print Preview</a>
+											</div>
+                                        </div>
+                                   
+                                </div>
+								<!--end::Card-->
+                            </form>
+                            <!--end::Form-->
+							</div>
+							<!--end::Container-->
+						</div>
+						<!--end::Entry-->
+					</div>
+					<!--end::Content-->
+					
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>
+		<!--end::Main-->
+		
+		<!--begin::Scrolltop-->
+		<div id="kt_scrolltop" class="scrolltop">
+			<span class="svg-icon">
+				<!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg-->
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+					<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+						<polygon points="0 0 24 0 24 24 0 24" />
+						<rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1" />
+						<path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fill-rule="nonzero" />
+					</g>
+				</svg>
+				<!--end::Svg Icon-->
+			</span>
+		</div>
+		<!--end::Scrolltop-->
+
+		<!-- <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script> -->
+		<!--begin::Global Config(global config for global JS scripts)-->
+		<script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#6993FF", "warning": "#FFA800", "danger": "#e61794", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#E1E9FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
+		<!--end::Global Config-->
+		<!--begin::Global Theme Bundle(used by all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<script src="assets/js/pages/crud/datatables/basic/paginations.js"></script>
+
+		<!--Sweetalert-->
+		<script src="assets/sweetalert/sweetalert2.all.min.js"></script>
+		<!--end::Page Scripts-->
+
+		 <!--Sweetalert-->
+		 <script src="assets/sweetalert/sweetalert2.all.min.js"></script>
+		 <script>
+			 $(document).ready(function() {
+				 var error_msg = "<%=error_msg%>";
+ 
+				if (error_msg != "") {			
+			   		swal({
+						type: 'error',
+						title: 'Error',
+						text: error_msg,
+						timer: 2500,
+						showConfirmButton: false,
+			   		});
+				}				 
+			 });
+
+	$(document).on("click", ".open-PayHistoryDialog", function () {
+     	var id = $(this).data('id');
+		// console.log(id);
+		var tbodytext = '';
+
+	 	$.ajax({
+		url: "http://nenotechnologies-001-site13.etempurl.com/api/Invoice/GetPaymentsByInvoiceNo?invoice_no="+id,
+        type: 'GET',
+        headers: {
+            AccessToken: '<%= accessToken %>'
+        }, 
+		json: true,
+        success: function(res) {
+			var payObjts = res.data;
+			let sortedData = payObjts.slice().sort((a, b) => a.id - b.id);
+
+			sortedData.forEach(obj => {
+				tbodytext = tbodytext + '<tr>'+
+							'<td>'+obj.id+'</td>'+
+							'<td>'+obj.date+'</td>'+
+							'<td>'+obj.payment_method+'</td>'+
+							'<td style="text-align:right;">'+obj.total_payable+'.00</td>'+
+							'<td style="text-align:right;">'+obj.paid_amount+'</td>'+
+							'<td style="text-align:right;">'+obj.balance+'</td>'+
+							'<td>'+obj.created_by+'</td>'+
+							'</tr>';
+			});
+			console.log(tbodytext);
+			$("#tbody").html(tbodytext);
+        }		
+    	});
+			
+	});
+		 </script>
+
+<!-- Modal-->
+<div class="modal fade" id="payHistoryDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">View Payment History</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+				<div class="card card-custom">
+					<!--begin::Body-->
+					<div class="card-body">						
+						<!--begin::Contact-->
+						<!-- <div class="pt-8 pb-6">		 -->
+							<div class="table-responsive" style="width: 100%;">
+								<table class="table table-head-custom table-vertical-center table-head-bg table-bordered">
+									<thead>
+										<tr class="text-left">
+											<th class="pl-7"><span class="text-dark-75">ID</span></th>
+											<th class="pl-7"><span class="text-dark-75">Date</span></th>
+											<th class="pl-7"><span class="text-dark-75">Payment Method</span></th>		
+											<th class="pl-7"><span class="text-dark-75">Total Payable</span></th>
+											<th class="pl-7"><span class="text-dark-75">Paid Amount</span></th>	
+											<th class="pl-7"><span class="text-dark-75">Invoice Balance</span></th>
+											<th class="pl-7"><span class="text-dark-75">Created By</span></th>													
+										</tr>
+									</thead>
+									<tbody id="tbody">
+										
+									</tbody>
+								</table>
+							</div>
+						<!-- </div> -->
+						<!--end::Contact-->
+					</div>
+					<!--end::Body-->
+				</div>
+				<!--end::Card-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+
+	</body>
+	<!--end::Body-->
+</html>

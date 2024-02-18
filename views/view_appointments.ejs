@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!--begin::Head-->
+	<head><base href="../../../">
+		<meta charset="utf-8" />
+		<title><%=sub_title%></title>
+		<meta name="description" content="User datatable listing" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Theme Styles(used by all pages)-->
+		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+    <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+
+<style>
+.aside-secondary-enabled.aside-fixed .wrapper {
+	padding-left: 0;
+}
+.aside-secondary-enabled .aside {
+	width: 0;
+}
+
+/* .gutter-b {
+    margin-bottom: 0;
+} */
+</style>
+
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading">
+		<!--begin::Main-->
+		<!-- MOBILE HEADER -->
+		<%- include('includes/mobile_header.ejs'); %>
+
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Page-->
+			<div class="d-flex flex-row flex-column-fluid page">
+
+                <!-- NAV BAR  -->
+                <%- include('includes/navbar.ejs'); %>
+
+				<!--begin::Wrapper-->
+				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+					<!--begin::Content-->
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+                        <!--begin::Subheader-->
+						<div class="subheader py-3 py-lg-8 subheader-transparent" id="kt_subheader">
+							<div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+							
+								<!-- HEADER  -->
+								<%- include('includes/header.ejs'); %>
+
+							</div>
+						</div>
+						<!--end::Subheader-->
+
+						<!--begin::Entry-->
+						<div class="d-flex flex-column-fluid">
+							<!--begin::Container-->
+							<div class="container">
+
+								<%- include ("includes/messages"); %>
+
+								<!--begin::Card-->
+								<div class="card card-custom">
+									<!--begin::Header-->
+									<div class="card-header flex-wrap border-0 pt-6 pb-0">
+										<div class="card-title align-items-start flex-column">
+											<span class="text-muted font-weight-bold"><%=sub_title%></span>
+									   </div>
+										<div class="card-toolbar">
+										
+											<!--begin::Button-->
+											<a href="/appointments/add_appointment" class="btn btn-primary font-weight-bolder">
+												<span class="svg-icon svg-icon-md">
+													<!--begin::Svg Icon | path:assets/media/svg/icons/Communication/Mail-attachment.svg-->
+													<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+														<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+															<polygon points="0 0 24 0 24 24 0 24" />
+															<path d="M18,8 L16,8 C15.4477153,8 15,7.55228475 15,7 C15,6.44771525 15.4477153,6 16,6 L18,6 L18,4 C18,3.44771525 18.4477153,3 19,3 C19.5522847,3 20,3.44771525 20,4 L20,6 L22,6 C22.5522847,6 23,6.44771525 23,7 C23,7.55228475 22.5522847,8 22,8 L20,8 L20,10 C20,10.5522847 19.5522847,11 19,11 C18.4477153,11 18,10.5522847 18,10 L18,8 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
+															<path d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
+														</g>
+													</svg>
+													<!--end::Svg Icon-->
+												</span>New Appointment</a>
+											<!--end::Button-->
+										</div>
+									</div>
+									<!--end::Header-->
+									<div class="card-body">
+
+                    <div class="form-group row">
+                      <label class="col-xl-3 col-lg-3 col-form-label">Search By Date :</label>
+                      <div class="col-lg-9 col-xl-5">													
+                        <input class="form-control form-control-lg form-control-solid" type="date" name ="app_date" id="app_date" value="<%=c_date%>"/> 
+                      </div>&nbsp;&nbsp;&nbsp;&nbsp;
+                      <div class="col-lg-9 col-xl-1">													
+                        <a href="#" class="btn btn-icon btn-default btn-hover-primary ml-2 h-40px w-40px flex-shrink-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="searchByDate();">
+                          <span class="svg-icon svg-icon-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                              <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                <rect x="0" y="0" width="24" height="24"></rect>
+                                <path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+                                <path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"></path>
+                              </g>
+                            </svg>
+                          </span>
+                        </a>	
+                      </div>	
+                    </div>
+<hr><br>
+
+<table class="table table-separate table-head-custom table-checkable" id="appTable">
+  <thead>
+    <tr>
+      <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Patient</th>
+      <th>Appointment Number</th>
+	  <th>Appointment Type</th>
+	  <th>Contact</th>
+      <th>Payment</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody id="appHolder">
+	<% for(var i = 0 ; i < applist.length ; i++) { 
+	
+		if (applist[i].patient_Gender == 'Male' && applist[i].patient_type == 'Child') {
+			var img = 'assets/media/svg/avatars/001-boy.svg';
+		}else if (applist[i].patient_Gender == 'Female' && applist[i].patient_type == 'Child') {
+			var img = 'assets/media/svg/avatars/018-girl-9.svg';
+		}else if(applist[i].patient_Gender == 'Male' && applist[i].patient_type == 'Adult'){
+			var img = 'assets/media/svg/avatars/034-boy-14.svg';
+		}else if(applist[i].patient_Gender == 'Female' && applist[i].patient_type == 'Adult'){
+			var img = 'assets/media/svg/avatars/039-girl-21.svg';
+		}else{
+			var img = 'assets/media/users/default.jpg';
+		}
+
+		if(applist[i].patient_age != ''){
+			var age = applist[i].patient_age+' years old';
+	  	}else{
+			var age = '';
+	  	}
+	%>
+	  	<tr>
+		  <td class="pl-0 py-5"><div class="d-flex align-items-center"><div class="symbol symbol-50 symbol-light mr-4"><span class="symbol-label"><img src="<%=img%>" class="h-75 align-self-end" alt=""></span></div><div><a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg"><%=applist[i].patient_name%></a><span class="text-muted font-weight-bold d-block"><%=age%> </span><span class="text-muted font-weight-bold d-block"><%=applist[i].patient_type%></span></div></div></td>
+		  <td class="pl-0 py-5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label label-lg font-weight-bold label-light-info label-inline" style="font-size: 18px; padding: 10px;"><%=applist[i].appointment_number%></span></td> 
+		  <td class="pl-0 py-5"><span class="font-weight-bold">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%=applist[i].appointment_type%></span></td>
+		  <td class="pl-0 py-5">&nbsp;&nbsp;&nbsp;<span class="font-weight-bold"><%=applist[i].patient_contact_number%></span></td>		  
+		  <td class="pl-0 py-5">
+			<% if(applist[i].invoice_balance_list.length == 0){ 
+				var disabled = 'disabled';
+			}else{
+				var disabled = '';
+			}
+			%>
+			<a href="/invoices/payment/<%=JSON.stringify(applist[i].invoice_balance_list)%>&<%=applist[i].appointment_number%>&<%=applist[i].patient_name%>&<%=applist[i].patient_type%>&<%=applist[i].patient_contact_number%>&<%=applist[i].patient_id%>" target="_blank" class="btn btn-sm <%=disabled%>" style="background-color: rgb(245, 100, 148); color: white; width: 80px;">Payment</a>
+		
+		  </td>
+		  <td class="pl-0 py-5">&nbsp;&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-sm btn-clean btn-icon mr-2 open-AppDialog" data-toggle="modal" data-id="<%=applist[i].id%>" href="#appDialog">	                            
+				<span class="svg-icon svg-icon-primary svg-icon-xl">
+					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+					<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+						<rect x="0" y="0" width="24" height="24"/>
+						<path d="M3,12 C3,12 5.45454545,6 12,6 C16.9090909,6 21,12 21,12 C21,12 16.9090909,18 12,18 C5.45454545,18 3,12 3,12 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+						<path d="M12,15 C10.3431458,15 9,13.6568542 9,12 C9,10.3431458 10.3431458,9 12,9 C13.6568542,9 15,10.3431458 15,12 C15,13.6568542 13.6568542,15 12,15 Z" fill="#000000" opacity="0.3"/>
+					</g>
+				</svg>
+				</span>                    
+			</a>
+		  </td>
+		</tr>
+         <% } %>
+  </tbody>
+</table>
+
+									</div>
+													
+								</div>
+								<!--end::Card-->
+							</div>
+							<!--end::Container-->
+						</div>
+						<!--end::Entry-->
+					</div>
+					<!--end::Content-->
+					
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>
+		<!--end::Main-->
+		
+		<!--begin::Scrolltop-->
+		<div id="kt_scrolltop" class="scrolltop">
+			<span class="svg-icon">
+				<!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg-->
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+					<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+						<polygon points="0 0 24 0 24 24 0 24" />
+						<rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1" />
+						<path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fill-rule="nonzero" />
+					</g>
+				</svg>
+				<!--end::Svg Icon-->
+			</span>
+		</div>
+		<!--end::Scrolltop-->
+
+		<script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#6993FF", "warning": "#FFA800", "danger": "#e61794", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#E1E9FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
+		<!--end::Global Config-->
+		<!--begin::Global Theme Bundle(used by all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+
+    	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+		<script>
+			$(document).ready( function () {
+    			$('#appTable').DataTable();
+			} );
+		</script>
+
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<script src="assets/js/pages/crud/datatables/basic/paginations.js"></script>
+
+		<!--end::Page Scripts-->
+
+		<script>
+
+		function searchByDate(){
+			var text = '';
+			var select_date = $('#app_date').val();   //2022-03-23 
+			console.log(select_date);
+			var url_date = select_date.split('-')[2]+'-'+select_date.split('-')[1]+'-'+select_date.split('-')[0];   // 09-02-2022
+
+		$.ajax({
+  			url: 'http://nenotechnologies-001-site13.etempurl.com/api/appointment/getappointmentlistnydate?date='+url_date,
+  			type: 'GET',
+  			headers: {
+  			    AccessToken: '<%= accessToken %>'
+  			}, 
+      		success: function(res) {
+				console.log(res);
+				var appObjts = res.data;
+
+				// sorting data 
+				let sortedData = appObjts.slice().sort((a, b) => a.id - b.id);
+
+				sortedData.forEach(app => {
+
+				if (app.patient_Gender == 'Male' && app.patient_type == 'Child') {
+					var img = 'assets/media/svg/avatars/001-boy.svg';
+				}else if (app.patient_Gender == 'Female' && app.patient_type == 'Child') {
+					var img = 'assets/media/svg/avatars/018-girl-9.svg';
+				}else if(app.patient_Gender == 'Male' && app.patient_type == 'Adult'){
+                	var img = 'assets/media/svg/avatars/034-boy-14.svg';
+              	}else if(app.patient_Gender == 'Female' && app.patient_type == 'Adult'){
+                	var img = 'assets/media/svg/avatars/039-girl-21.svg';
+              	}else{
+					var img = 'assets/media/users/default.jpg';
+				}
+
+				  if(app.patient_age != ''){
+						var age = app.patient_age+' years old';
+				  }else{
+					var age = '';
+				  }
+
+					text += '<tr>'+
+		 				'<td class="pl-0 py-5"><div class="d-flex align-items-center"><div class="symbol symbol-50 symbol-light mr-4"><span class="symbol-label"><img src="'+img+'" class="h-75 align-self-end" alt=""></span></div><div><a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">'+app.patient_name+'</a><span class="text-muted font-weight-bold d-block">'+age+'</span><span class="text-muted font-weight-bold d-block">'+app.patient_type+'</span></div></div></td>'+
+		 				'<td class="pl-0 py-5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label label-lg font-weight-bold label-light-info label-inline" style="font-size: 18px; padding: 10px;">'+app.appointment_number+'</span></td>'+ 
+		 				'<td class="pl-0 py-5">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="font-weight-bold">'+app.appointment_type+'</span></td>'+
+		 				'<td class="pl-0 py-5">&nbsp;&nbsp;&nbsp;<span class="font-weight-bold">'+app.patient_contact_number+'</span></td>'+		  
+						'<td class="pl-0 py-5"><span class="label label-lg font-weight-bold label-light-default label-inline" style="border-radius: 0%; background-color: rgb(245, 100, 148); color: whitesmoke; width:80px;">'+app.status+'</span></td>'+
+		 				'<td class="pl-0 py-5">&nbsp;&nbsp;&nbsp;&nbsp;'+
+						'<a class="btn btn-sm btn-clean btn-icon mr-2 open-AppDialog" data-toggle="modal" data-id="'+app.id+'" href="#appDialog">'+	                            
+						'<span class="svg-icon svg-icon-primary svg-icon-xl">'+
+						'<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">'+
+						'<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">'+
+						'<rect x="0" y="0" width="24" height="24"/>'+
+						'<path d="M3,12 C3,12 5.45454545,6 12,6 C16.9090909,6 21,12 21,12 C21,12 16.9090909,18 12,18 C5.45454545,18 3,12 3,12 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>'+
+						'<path d="M12,15 C10.3431458,15 9,13.6568542 9,12 C9,10.3431458 10.3431458,9 12,9 C13.6568542,9 15,10.3431458 15,12 C15,13.6568542 13.6568542,15 12,15 Z" fill="#000000" opacity="0.3"/>'+
+						'</g>'+
+						'</svg>'+
+						'</span>'+                    
+						'</a>'+
+						'</td>'+	
+      					'</tr>';
+				});
+
+				document.getElementById('appHolder').innerHTML = text;
+			}
+
+			
+
+		});
+
+		}
+
+		</script>
+
+<!-- Modal scripts  -->
+<script>
+	$(document).on("click", ".open-AppDialog", function () {
+
+		 var id = $(this).data('id');
+		 $.ajax({
+			url: "http://nenotechnologies-001-site13.etempurl.com/api/appointment/GetAppointmentByid?id="+id,
+			type: 'GET',
+			headers: {
+				AccessToken: '<%= accessToken %>'
+			}, 
+			json: true,
+			success: function(res) {
+				// console.log(res);
+
+				if(res.data.patient_age != ''){
+					var age = res.data.patient_age+' years old';
+				}else{
+					var age = '';
+				}
+				$(".modal-body #app_id").val(res.data.id);
+				$(".modal-body #name").text(res.data.patient_name);
+				$(".modal-body #age").text(age);
+				$(".modal-body #type").text(res.data.patient_type);
+				$(".modal-body #number").text(res.data.appointment_number);
+				$(".modal-body #nic").text(res.data.patient_nic);
+				$(".modal-body #gender").text(res.data.patient_Gender);
+				$(".modal-body #phone").text(res.data.patient_contact_number);
+				$(".modal-body #app_type").text(res.data.appointment_type);
+				$(".modal-body #date").text(res.data.date);
+				$(".modal-body #status").text(res.data.status);
+				$("a#createBtn").attr('href', "/invoices/add_invoice/"+res.data.appointment_number+"&"+res.data.patient_name+"&"+res.data.patient_type+"&"+res.data.patient_contact_number+"&"+res.data.id+"&"+res.data.patient_id);
+				$("a#viewBtn").attr('href', "/invoices/view_single_invoice/"+res.data.id);
+
+				if (res.data.patient_Gender == 'Male' && res.data.patient_type == 'Child') {
+					var img = 'assets/media/svg/avatars/001-boy.svg';
+				}else if (res.data.patient_Gender == 'Female' && res.data.patient_type == 'Child') {
+					var img = 'assets/media/svg/avatars/018-girl-9.svg';
+				}else if(res.data.patient_Gender == 'Male' && res.data.patient_type == 'Adult'){
+                	var img = 'assets/media/svg/avatars/034-boy-14.svg';
+              	}else if(res.data.patient_Gender == 'Female' && res.data.patient_type == 'Adult'){
+                	var img = 'assets/media/svg/avatars/039-girl-21.svg';
+              	}else{
+					var img = 'assets/media/users/default.jpg';
+				}
+
+				$(".modal-body #image_div").html(
+					'<div class="symbol-label" style="margin-left: 60px; background-image:url('+img+')"></div>'+
+					'<i class="symbol-badge symbol-badge-bottom bg-success"></i>');
+
+				// get current date 
+				var date = new Date();
+				console.log(date);
+    			var invdate = new Date(date.toLocaleString('en-US', { timeZone: "Asia/Colombo"}));
+    			var diff = date.getTime() - invdate.getTime();
+    			var convert_date = new Date(date.getTime() - diff);
+    			var c_date = moment(convert_date, "DD/MM/YYYY, h:mm:ss a").format("DD-MM-YYYY");
+				console.log(moment(convert_date, "DD/MM/YYYY, h:mm:ss a").format("Do MMMM YYYY , h:mm:ss a"));
+				var c_date_time = convert_date.getTime();
+
+				// get selected date
+				var app_date = $('#app_date').val();
+				var hours = date.getHours() % 12;
+				var s_date = new Date(app_date.split('-')[0], app_date.split('-')[1]-1, app_date.split('-')[2], (hours<10?'0':'')+hours, (date.getMinutes()<10?'0':'')+date.getMinutes(), (date.getSeconds()<10?'0':'')+date.getSeconds());
+				console.log(s_date);
+    			var s_invdate = new Date(s_date.toLocaleString('en-US', { timeZone: "Asia/Colombo"}));
+    			var s_diff = s_date.getTime() - s_invdate.getTime();
+    			var s_convert_date = new Date(s_date.getTime() - s_diff);
+    			var select_date = moment(s_convert_date, "DD/MM/YYYY, h:mm:ss a").format("DD-MM-YYYY");
+				console.log(moment(s_convert_date, "DD/MM/YYYY, h:mm:ss a").format("Do MMMM YYYY , h:mm:ss a"));
+				var select_date_time = s_convert_date.getTime();
+				
+				if(select_date == c_date){ console.log('select date same as current_date') }
+				else if(select_date_time > c_date_time){ console.log('select date is grater than current_date') }
+				else if(select_date_time < c_date_time){ console.log('select date is less than current_date') }
+				
+
+				// btn settings 
+				if(c_date == select_date && res.data.status=='Pending'){ $('#createBtn').show();  $('#viewBtn').hide(); $('#cancelBtn').hide(); $('#systemBtn').hide(); $('#footerBtn').css('background-color', 'whitesmoke');}
+				else if(c_date == select_date && res.data.status=='Completed'){ $('#createBtn').hide(); $('#viewBtn').show(); $('#cancelBtn').hide(); $('#systemBtn').hide(); $('#footerBtn').css('background-color', 'whitesmoke');}
+
+				else if(select_date_time < c_date_time && res.data.status=='Completed'){ $('#createBtn').hide(); $('#viewBtn').show(); $('#cancelBtn').hide(); $('#systemBtn').hide(); $('#footerBtn').css('background-color', 'whitesmoke');}  
+				else if(select_date_time < c_date_time && res.data.status=='Pending'){ $('#createBtn').hide(); $('#viewBtn').hide(); $('#cancelBtn').hide(); $('#systemBtn').show(); $('#footerBtn').css('background-color', 'rgb(212, 52, 52)'); }
+
+				else if(select_date_time > c_date_time){ $('#createBtn').hide(); $('#viewBtn').hide(); $('#cancelBtn').show(); $('#footerBtn').css('background-color', 'whitesmoke');}  
+
+			}
+		});
+	
+	});
+</script>
+
+<!-- Modal-->
+<div class="modal fade" id="appDialog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Appointment Details</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+
+				<div class="card card-custom gutter-b mar-b">
+					<!--begin::Body-->
+					<div class="card-body pt-4">
+						<!--begin::User-->
+						<div class="text-center mb-10">
+							<span class="label label-inline font-weight-bold label-lg" style=" float: right; font-size: 30px; padding: 20px; border: 1px solid rgb(245, 233, 230); color: whitesmoke; background-color: rgb(245, 100, 148);" id="number"></span>
+							<div class="symbol symbol-60 symbol-circle symbol-xl-90" id="image_div">
+								<!-- <div class="symbol-label" style="margin-left: 60px; background-image:url('assets/media/svg/avatars/039-girl-21.svg')"></div>
+								<i class="symbol-badge symbol-badge-bottom bg-success"></i> -->
+							</div>
+							<h4 class="font-weight-bold my-2" id="name"></h4>
+							<div class="text-muted mb-2" id="age"></div>
+						</div>
+						<!--end::User-->
+						<!-- start info  -->
+						<div class="pt-4">
+							<input type="hidden" id="app_id">
+							<div class="d-flex align-items-center justify-content-between mb-1">
+								<span class="font-weight-bold mr-2">Patient Type :</span>
+								<a href="#" class="text-muted text-hover-primary" id="type"></a>
+							</div>
+							<div class="d-flex align-items-center justify-content-between mb-1">
+								<span class="font-weight-bold mr-2">Patient NIC:</span>
+								<span class="text-muted" id="nic"></span>
+							</div>
+							<div class="d-flex align-items-center justify-content-between mb-1">
+								<span class="font-weight-bold mr-2">Gender:</span>
+								<span class="text-muted" id="gender"></span>
+							</div>
+							<div class="d-flex align-items-center justify-content-between mb-1">
+								<span class="font-weight-bold mr-2">Phone:</span>
+								<span class="text-muted" id="phone"></span>
+							</div><hr>
+							<div class="d-flex align-items-center justify-content-between mb-1">
+								<span class="font-weight-bold mr-2">Appointment Type:</span>
+								<span class="text-muted" id="app_type"></span>
+							</div>
+							<div class="d-flex align-items-center justify-content-between mb-1">
+								<span class="font-weight-bold mr-2">Appointment Date:</span>
+								<span class="text-muted" id="date"></span>
+							</div>
+							<div class="d-flex align-items-center justify-content-between mb-1">
+								<span class="font-weight-bold mr-2">Status:</span>
+								<span class="text-muted" id="status"></span>
+							</div>
+						</div>
+						<!-- end info  -->
+					</div>
+					<!--end::Body-->
+				</div>
+				<!--end::Card-->
+
+
+            </div>
+            <div class="modal-footer" id="footerBtn">
+				<h2 id="systemBtn" style="color: whitesmoke; margin: 10px auto;display: block;position: inherit;">Canceled</h2>
+				<button type="button" class="btn btn-sm btn-primary" id="cancelBtn" onclick="cancelApp();">Cancel Appointment</button>
+                <a href="" target="_blank" class="btn btn-sm btn-primary" id="createBtn">Create Invoice</a>
+				<a href="" target="_blank" class="btn btn-sm btn-primary" id="viewBtn">View Invoice</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Sweetalert-->
+<script src="assets/sweetalert/sweetalert2.all.min.js"></script>
+<script>
+	function cancelApp(){
+		var id = $('#app_id').val();
+
+		swal({
+			type: 'warning',
+            title: 'Are you sure',
+			text: 'you want to cancel this Appointment?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+			confirmButtonColor: '#eb5bb1',
+            cancelButtonText: 'No',
+            allowOutsideClick: false
+        	}).then((result) => {
+            
+			if (result.dismiss !== 'cancel') {
+				// Yes
+			var bodydata = {
+                "id": id,
+        	};
+
+			// cancel the appointment 
+			$.ajax({        
+        	url: 'http://nenotechnologies-001-site13.etempurl.com/api/appointment/CancelAppointment',
+        	type: 'POST',
+        	headers: {
+        	    AccessToken: '<%= accessToken %>'
+        	},
+			data: bodydata,  
+			json: true,
+        	success: function(res) {
+				if(res.Status == 'Success'){
+					$('#appDialog').modal('hide');
+				}
+			}
+			});
+
+            } else {
+				// No
+				$('#appDialog').modal('hide');
+            }
+        	})
+
+	}
+</script>
+
+	</body>
+	<!--end::Body-->
+</html>

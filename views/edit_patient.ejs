@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!--begin::Head-->
+	<head><base href="../../../">
+		<meta charset="utf-8" />
+		<title><%=sub_title%></title>
+		<meta name="description" content="User datatable listing" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Theme Styles(used by all pages)-->
+		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+        <style>
+			.aside-secondary-enabled.aside-fixed .wrapper {
+    			padding-left: 0;
+			}
+			.aside-secondary-enabled .aside {
+    			width: 0;
+			}
+		</style>
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading">
+		<!--begin::Main-->
+		<!-- MOBILE HEADER -->
+		<%- include('includes/mobile_header.ejs'); %>
+
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Page-->
+			<div class="d-flex flex-row flex-column-fluid page">
+
+                <!-- NAV BAR  -->
+                <%- include('includes/navbar.ejs'); %>
+
+				<!--begin::Wrapper-->
+				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+					<!--begin::Content-->
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+                        <!--begin::Subheader-->
+						<div class="subheader py-3 py-lg-8 subheader-transparent" id="kt_subheader">
+							<div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+							
+								<!-- HEADER  -->
+								<%- include('includes/header.ejs'); %>
+
+							</div>
+						</div>
+						<!--end::Subheader-->
+
+						<!--begin::Entry-->
+						<div class="d-flex flex-column-fluid">
+							<!--begin::Container-->
+							<div class="container">
+
+								<!-- <%- include ("includes/messages"); %> -->
+
+                             <!--begin::Form-->
+                                 <form class="form" method="post" action="/patients/edit_patient/<%=patient.id%>">
+								<!--begin::Card-->
+                                <div class="card card-custom card-stretch">
+                                    
+                                    <!--begin::Header-->
+                                    <div class="card-header py-3">
+                                        <div class="card-title align-items-start flex-column">
+                                            <span class="text-muted font-weight-bold"><%=sub_title%></span>
+                                        </div>
+										<div class="card-toolbar">
+											<div class="input-group-prepend">
+												<span class="input-group-text">
+													<i class="la la-user-injured"></i>
+												</span>
+											</div>
+                                        </div>
+                                    </div>
+                                    <!--end::Header-->
+                                   
+                                        <!--begin::Body-->
+                                        <div class="card-body">  
+										
+											<div class="form-group row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Patient Type</label>
+												<div class="col-lg-9 col-xl-6">
+                                                <div class="radio-inline">
+														<% 
+														var a_checked, c_checked = '';
+														if(patient.type == 'Adult'){ a_checked = 'checked'; } 
+														else{ c_checked = 'checked'; }
+														%>
+														<label class="radio radio-solid" data-toggle="collapse" data-target="">
+														<input disabled type="radio" name="type" <%=a_checked%> value="Adult">
+														<span></span>Adult</label>
+														<label class="radio radio-solid" data-toggle="collapse" data-target="">
+														<input disabled type="radio" name="type" <%=c_checked%> value="Child"/>
+														<span></span>Child</label>
+													</div>
+												</div>
+                                            </div>
+																						
+											<div class="form-group row">
+												<label class="col-xl-3 col-lg-3 col-form-label">Patient Name</label>
+												<div class="col-lg-9 col-xl-6">
+													<div class="input-group input-group-lg input-group-solid">
+														<div class="input-group-prepend">
+															<span class="input-group-text">
+																<i class="la la-user-injured"></i>
+															</span>
+														</div>
+													<input class="form-control form-control-lg form-control-solid" type="text" name ="name" id="ap_name" value="<%=patient.name%>" placeholder="Patient Name"/>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-xl-3 col-lg-3 col-form-label">NIC</label>
+												<div class="col-lg-9 col-xl-6">
+													<div class="input-group input-group-lg input-group-solid">
+														<div class="input-group-prepend">
+															<span class="input-group-text">
+																<i class="la la-address-card"></i>
+															</span>
+														</div>
+													<input class="form-control form-control-lg form-control-solid" disabled value="<%=patient.nic%>" type="text" name ="nic" id="ap_nic" placeholder="NIC"/>
+													</div>
+												</div>
+											</div>
+											
+											<div class="form-group row">
+												<label class="col-xl-3 col-lg-3 col-form-label">DOB</label>
+												<div class="col-lg-9 col-xl-6">
+													<div class="input-group input-group-lg input-group-solid">
+														<div class="input-group-prepend">
+															<span class="input-group-text">
+																<i class="la la-eyedropper"></i>
+															</span>
+														</div>
+													<input class="form-control form-control-lg form-control-solid" value="<%=patient.dob%>" type="date" name ="dob" placeholder="Patient NIC"/>
+													</div>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-xl-3 col-lg-3 col-form-label">Gender</label>
+												<div class="col-lg-9 col-xl-6">
+													<div class="radio-inline">
+														<% 
+														var m_checked, f_checked = '';
+														if(patient.gender == 'Male'){ m_checked = 'checked'; } 
+														else if(patient.gender == 'Female'){ f_checked = 'checked'; }
+														%>
+														<label class="radio radio-solid">
+														<input type="radio" name="gender" id="male" <%=m_checked%> value="Male" />
+														<span></span>Male</label>
+														<label class="radio radio-solid set-disable">
+														<input type="radio" name="gender" id="female" <%=f_checked%> value="Female" />
+														<span></span>Female</label>
+													</div>
+												</div>
+											</div>
+
+											<hr>
+											<div class="row">
+												<!-- <label class="col-xl-3"></label> -->
+												<div class="col-lg-9 col-xl-6">
+													<h6 class="font-weight-bold">Contact Information</h6>
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-xl-3 col-lg-3 col-form-label">Contact Number</label>
+												<div class="col-lg-9 col-xl-6">
+													<div class="input-group input-group-lg input-group-solid">
+														<div class="input-group-prepend">
+															<span class="input-group-text">
+																<i class="la la-phone"></i>
+															</span>
+														</div>
+														<input type="text" class="form-control form-control-lg form-control-solid" value="<%=patient.contact_number%>" name="contact" id="ap_contact"placeholder="Phone" />
+													</div>
+													
+												</div>
+											</div>
+											<div class="form-group row">
+												<label class="col-xl-3 col-lg-3 col-form-label">Address</label>
+												<div class="col-lg-9 col-xl-6">
+													<div class="input-group input-group-lg input-group-solid">
+														<div class="input-group-prepend">
+															<span class="input-group-text">
+																<i class="la la-map-marker"></i>
+															</span>
+														</div>
+														<input type="text" class="form-control form-control-lg form-control-solid" value="<%=patient.address%>" name="address" placeholder="Address" />
+													</div>
+												</div>
+											</div>
+
+                                        </div>
+                                        <!--end::Body-->
+
+										<div class="card-footer">
+                                            <div style="float: right;">
+												<button type="submit" class="btn btn-danger mr-2" id="savePatientBtn">Update Patient</button>
+                                            	<button type="reset" class="btn btn-secondary">Cancel</button>
+											</div>
+                                        </div>
+                                   
+                                </div>
+								<!--end::Card-->
+                            </form>
+                            <!--end::Form-->
+                                
+							</div>
+							<!--end::Container-->
+						</div>
+						<!--end::Entry-->
+					</div>
+					<!--end::Content-->
+					
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>
+		<!--end::Main-->
+		
+		<!--begin::Scrolltop-->
+		<div id="kt_scrolltop" class="scrolltop">
+			<span class="svg-icon">
+				<!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg-->
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+					<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+						<polygon points="0 0 24 0 24 24 0 24" />
+						<rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1" />
+						<path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fill-rule="nonzero" />
+					</g>
+				</svg>
+				<!--end::Svg Icon-->
+			</span>
+		</div>
+		<!--end::Scrolltop-->
+
+		<!-- <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script> -->
+		<!--begin::Global Config(global config for global JS scripts)-->
+		<script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#6993FF", "warning": "#FFA800", "danger": "#e61794", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#E1E9FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
+		<!--end::Global Config-->
+		<!--begin::Global Theme Bundle(used by all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<script src="assets/js/pages/crud/datatables/basic/paginations.js"></script>
+
+		<!--Sweetalert-->
+		<script src="assets/sweetalert/sweetalert2.all.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				var success_msg = "<%=success_msg%>";
+				var error_msg = "<%=error_msg%>";
+
+				if (error_msg != "") {			
+            		swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: error_msg,
+					timer: 2500,
+					showConfirmButton: false,
+                	});
+        		}else if(success_msg != ""){
+					swal({
+                    type: 'success',
+                    title: 'Success',
+                    text: success_msg,
+                    showConfirmButton: true,
+					confirmButtonColor: '#eb5bb1',
+					});
+					
+				}
+				
+			});
+		</script>
+
+
+		<!--end::Page Scripts-->
+	</body>
+	<!--end::Body-->
+</html>

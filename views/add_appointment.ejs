@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!--begin::Head-->
+	<head><base href="../../../">
+		<meta charset="utf-8" />
+		<title><%=sub_title%></title>
+		<meta name="description" content="User datatable listing" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+
+		<!--begin::Page Custom Styles(used by this page)-->
+		<link href="assets/css/pages/wizard/wizard-3.css" rel="stylesheet" type="text/css" />
+
+		<!--begin::Global Theme Styles(used by all pages)-->
+		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+        <style>
+			.aside-secondary-enabled.aside-fixed .wrapper {
+    			padding-left: 0;
+			}
+			.aside-secondary-enabled .aside {
+    			width: 0;
+			}
+
+			#AD {
+ 				pointer-events: none;
+			}
+		</style>
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading">
+		<!--begin::Main-->
+		<!-- MOBILE HEADER -->
+		<%- include('includes/mobile_header.ejs'); %>
+
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Page-->
+			<div class="d-flex flex-row flex-column-fluid page">
+
+                <!-- NAV BAR  -->
+                <%- include('includes/navbar.ejs'); %>
+
+				<!--begin::Wrapper-->
+				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+					<!--begin::Content-->
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+                        <!--begin::Subheader-->
+						<div class="subheader py-3 py-lg-8 subheader-transparent" id="kt_subheader">
+							<div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+							
+								<!-- HEADER  -->
+								<%- include('includes/header.ejs'); %>
+
+							</div>
+						</div>
+						<!--end::Subheader-->
+
+						<!--begin::Entry-->
+						<div class="d-flex flex-column-fluid">
+							<!--begin::Container-->
+							<div class="container">
+
+								<!-- <%- include ("includes/messages"); %> -->
+
+								<div class="card card-custom">
+									  <!--begin::Header-->
+									  <div class="card-header py-3">
+                                        <div class="card-title align-items-start flex-column">
+											 <span class="text-muted font-weight-bold">Book <%=sub_title%></span>
+                                        </div>
+                                        <div class="card-toolbar">
+											<div class="input-group-prepend">
+												<span class="input-group-text">
+													<i class="la la-file-alt"></i>
+												</span>
+											</div>
+                                        </div>
+                                    </div>
+                                    <!--end::Header-->
+
+									<div class="card-body p-0">
+										<!--begin: Wizard-->
+										<div class="wizard wizard-3" id="kt_wizard_v3" data-wizard-state="first" data-wizard-clickable="true">
+											<!--begin: Wizard Nav-->
+											<div class="wizard-nav">
+												<div class="wizard-steps px-8 py-8 px-lg-15 py-lg-3">
+													<!--begin::Wizard Step 1 Nav-->
+													<div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
+														<div class="wizard-label">
+															<h3 class="wizard-title">
+															<span>1.</span>Search Patient</h3>
+															<div class="wizard-bar"></div>
+														</div>
+													</div>
+													<!--end::Wizard Step 1 Nav-->
+													<!--begin::Wizard Step 2 Nav-->
+													<div class="wizard-step" data-wizard-type="step" data-wizard-state="pending" id="AD">
+														<div class="wizard-label">
+															<h3 class="wizard-title">
+															<span>2.</span>Appointment Details</h3>
+															<div class="wizard-bar"></div>
+														</div>
+													</div>
+													
+													
+												</div>
+											</div>
+											<!--end: Wizard Nav-->
+											<!--begin: Wizard Body-->
+											<div class="row justify-content-center py-10 px-8 py-lg-12 px-lg-10">
+												<div class="col-xl-12 col-xxl-7">
+													<!--begin: Wizard Form-->
+													<form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form" method="post" action="/appointments/add_appointment">
+														<!--begin: Wizard Step 1-->
+														<div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
+
+										<!-- *************************************************************************************************** -->
+                                        <!--begin::Body-->
+                                        <div class="card-body">  
+												<input type="hidden" value="<%=current_user.accesstoken%>" name="accessToken"> 											
+												<input type="hidden" id="patient_id" name="patient_id">
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">Search Patient :</label>
+													<div class="col-lg-12 col-xl-8">													
+														<input class="form-control form-control-lg form-control-solid" type="text" name ="search_patient" id="search_patient" value="<%=patient_nic%>" placeholder="Search by NIC or Phone..."/> 
+													</div>
+													<div class="col-lg-2 col-xl-1">													
+														<a href="#" class="btn btn-icon btn-default btn-hover-primary ml-2 h-40px w-40px flex-shrink-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="searchPatient();">
+															<span class="svg-icon svg-icon-lg">
+																<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																	<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+																		<rect x="0" y="0" width="24" height="24"></rect>
+																		<path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+																		<path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"></path>
+																	</g>
+																</svg>
+															</span>
+														</a>	
+													</div>	
+												</div>								
+
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">Patient List :</label>
+													<div class="col-lg-12 col-xl-9">
+														<!-- list view  -->
+														<div class="card card-custom card-stretch">
+															<!--begin::Body-->
+															<div class="card-body pt-2" id="patient_list" style="border: thistle solid 1px; display: none;">
+																														
+															</div>
+															<!--end::Body-->
+														</div>
+														<!-- list view  -->
+													</div>
+												</div>
+
+												<hr>	
+												
+												<!-- collapse  -->
+												<div id="patient_info" class="collapse">
+													
+													<div class="form-group row">
+														<label class="col-xl-3 col-lg-3 col-form-label">Patient Name</label>
+														<div class="col-lg-9 col-xl-6">
+															<div class="input-group input-group-lg input-group-solid">
+																<div class="input-group-prepend">
+																	<span class="input-group-text">
+																		<i class="la la-user-injured"></i>
+																	</span>
+																</div>
+															<input class="form-control form-control-lg form-control-solid" type="text" readonly name ="name" id="name" placeholder="Patient Name"/>
+															</div>
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-xl-3 col-lg-3 col-form-label">NIC</label>
+														<div class="col-lg-9 col-xl-6">
+															<div class="input-group input-group-lg input-group-solid">
+																<div class="input-group-prepend">
+																	<span class="input-group-text">
+																		<i class="la la-address-card"></i>
+																	</span>
+																</div>
+															<input class="form-control form-control-lg form-control-solid" readonly type="text" name ="nic" id="nic" placeholder="NIC"/>
+															</div>
+														</div>
+													</div>
+													
+													<div class="form-group row">
+														<label class="col-xl-3 col-lg-3 col-form-label">DOB</label>
+														<div class="col-lg-9 col-xl-6">
+															<div class="input-group input-group-lg input-group-solid">
+																<div class="input-group-prepend">
+																	<span class="input-group-text">
+																		<i class="la la-eyedropper"></i>
+																	</span>
+																</div>
+																<input type="text" class="form-control form-control-lg form-control-solid" readonly name="dob" id="dob"placeholder="Phone" />
+															</div>
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-xl-3 col-lg-3 col-form-label">Gender</label>
+														<div class="col-lg-9 col-xl-6">
+															<div class="input-group input-group-lg input-group-solid">
+																<div class="input-group-prepend">
+																	<span class="input-group-text">
+																		<i class="la la-user"></i>
+																	</span>
+																</div>
+																<input type="text" class="form-control form-control-lg form-control-solid" readonly name="gender" id="gender" placeholder="Gender" />
+															</div>
+														</div>
+													</div>
+		
+													<div class="form-group row">
+														<label class="col-xl-3 col-lg-3 col-form-label">Contact Number</label>
+														<div class="col-lg-9 col-xl-6">
+															<div class="input-group input-group-lg input-group-solid">
+																<div class="input-group-prepend">
+																	<span class="input-group-text">
+																		<i class="la la-phone"></i>
+																	</span>
+																</div>
+																<input type="text" class="form-control form-control-lg form-control-solid" readonly name="contact" id="contact" placeholder="Phone" />
+															</div>
+															
+														</div>
+													</div>
+													<div class="form-group row">
+														<label class="col-xl-3 col-lg-3 col-form-label">Address</label>
+														<div class="col-lg-9 col-xl-6">
+															<div class="input-group input-group-lg input-group-solid">
+																<div class="input-group-prepend">
+																	<span class="input-group-text">
+																		<i class="la la-map-marker"></i>
+																	</span>
+																</div>
+																<input type="text" class="form-control form-control-lg form-control-solid" readonly name="address" id="address" placeholder="Address" />
+															</div>
+														</div>
+													</div>
+
+												</div>
+												<!-- collapse  -->
+												
+                                        </div>
+                                        <!--end::Body-->
+										<!-- *************************************************************************************************** -->
+
+														</div>
+														<!--end: Wizard Step 1-->
+														<!--begin: Wizard Step 2-->
+														<div class="pb-5" data-wizard-type="step-content">															
+															<div class="form-group row">
+																<label class="col-xl-3 col-lg-3 col-form-label">Appointment Date *</label>
+																<div class="col-lg-9 col-xl-6">
+																	<div class="input-group input-group-lg input-group-solid">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="la la-eyedropper"></i>
+																			</span>
+																		</div>
+																		<input type="date" class="form-control form-control-lg form-control-solid" name="date"/>
+																	</div>
+																</div>
+															</div>
+															<div class="form-group row">
+																<label class="col-xl-3 col-lg-3 col-form-label">Appointment Type *</label>
+																		<div class="col-lg-9 col-xl-6">
+																			<div class="input-group input-group-lg input-group-solid">
+																				<div class="input-group-prepend">
+																					<span class="input-group-text">
+																						<i class="la la-user-shield"></i>
+																					</span>
+																				</div>
+																				<select class="form-control form-control-lg form-control-solid" required name="type">
+																					<option disabled selected>Select Type...</option>
+																					<option value="Call">Call</option>
+																					<option value="Visit">Visit</option>
+																					<!-- <option value="Web">Web</option> -->
+																				</select>
+																			</div>
+																		</div>
+															</div>
+														</div>
+														<!--end: Wizard Step 2-->
+
+														<!--begin: Wizard Step 3-->
+														<!-- <div class="pb-5" data-wizard-type="step-content">															
+														</div> -->
+														<!--end: Wizard Step 3-->
+
+														<!--begin: Wizard Actions-->
+														<div class="d-flex justify-content-between border-top mt-5 pt-10">
+															<div class="mr-2">
+																<button type="button" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-2" data-wizard-type="action-prev">Previous</button>
+															</div>
+															<div>
+																<button type="submit" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-2" data-wizard-type="action-submit">Create Appointment</button>
+																<button type="button" class="btn btn-primary font-weight-bolder text-uppercase px-9 py-2" data-wizard-type="action-next" id="btnNext">Next</button>
+															</div>
+														</div>
+														<!--end: Wizard Actions-->
+													<div></div><div></div><div></div><div></div></form>
+													<!--end: Wizard Form-->
+												</div>
+											</div>
+											<!--end: Wizard Body-->
+										</div>
+										<!--end: Wizard-->
+									</div>
+								</div>
+                                
+							</div>
+							<!--end::Container-->
+						</div>
+						<!--end::Entry-->
+					</div>
+					<!--end::Content-->
+					
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>
+		<!--end::Main-->
+		
+		<!--begin::Scrolltop-->
+		<div id="kt_scrolltop" class="scrolltop">
+			<span class="svg-icon">
+				<!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg-->
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+					<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+						<polygon points="0 0 24 0 24 24 0 24" />
+						<rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1" />
+						<path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fill-rule="nonzero" />
+					</g>
+				</svg>
+				<!--end::Svg Icon-->
+			</span>
+		</div>
+		<!--end::Scrolltop-->
+
+		<script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#6993FF", "warning": "#FFA800", "danger": "#F64E60", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#E1E9FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
+		<!--end::Global Config-->
+		<!--begin::Global Theme Bundle(used by all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<!--end::Global Theme Bundle-->
+		<!--begin::Page Scripts(used by this page)-->
+		<script src="assets/js/pages/custom/wizard/wizard-3.js"></script>
+
+		<script>
+
+		$('#btnNext').prop('disabled', true);
+
+		// ***************************************************************************************
+		function searchPatient(){
+			$('#patient_info').collapse('hide');
+			var search_patient = $('#search_patient').val();
+			var textpatientlist = '';
+			// console.log(search_patient);
+
+			// Search patient
+        	$.ajax({        
+        	url: 'http://nenotechnologies-001-site13.etempurl.com/api/patient/PatientByNICANDType?nic='+search_patient+'&type=Adult',
+        	type: 'GET',
+        	headers: {
+        	    AccessToken: '<%=current_user.accesstoken%>'
+        	}, 
+        	success: function(res) {
+
+			if(res.data.id ==0){
+				
+				textpatientlist = textpatientlist + '<div class="d-flex align-items-center bg-light-warning rounded p-5 mb-9">'+
+                                                    '<span class="svg-icon svg-icon-warning mr-5">'+
+                                                    '<span class="svg-icon svg-icon-4x">'+
+                                                    '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">'+
+                                                    '<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">'+
+                                                    '<rect x="0" y="0" width="24" height="24"></rect>'+
+                                                    '<circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"></circle>'+
+                                                    '<rect fill="#000000" x="11" y="7" width="2" height="8" rx="1"></rect>'+
+                                                    '<rect fill="#000000" x="11" y="16" width="2" height="2" rx="1"></rect>'+
+                                                    '</g>'+
+                                                    '</svg><!--end::Svg Icon--></span>'+
+                                                    '</span>'+
+                                                    '<div class="d-flex flex-column flex-grow-1 mr-2">'+
+                                                    '<a class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">No data available in list.</a>'+
+                                                    '<a href="/patients/add_patient" class="btn btn-primary btn-sm font-weight-bolder" style="width:150px;">Create Patient</a>'+
+                                                    '</div>'+
+                                                    '</div>'
+
+				$('#patient_info').collapse('hide');
+
+			}else{
+
+				if(res.data.gender == 'Male' && res.data.type == 'Adult'){
+                	var a_img = "assets/media/svg/avatars/034-boy-14.svg";
+              	}else if(res.data.gender == 'Female' && res.data.type == 'Adult'){
+                	var a_img = "assets/media/svg/avatars/039-girl-21.svg";
+              	}
+
+              	if (res.data.dob != '') {
+              	  	var dob = res.data.dob;
+					var age = new Date().getFullYear() - dob.split('-')[0]+' years old';
+              	}else{
+					var age = '';
+				}
+
+        	    console.log(res.data.name);
+
+				textpatientlist = textpatientlist +
+					'<div class="d-flex flex-wrap align-items-center mb-7">'+
+					'<div class="symbol symbol-50 symbol-light mr-4">'+
+					'<div class="symbol-label" style="background-image: url('+a_img+')"></div>'+
+					'</div>'+
+					'<div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pr-3">'+
+					'<a href="#" class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">'+res.data.name+'</a>'+
+					'<span class="text-muted font-weight-bold font-size-sm my-1">'+age+'</span>'+
+					'<span class="text-muted font-weight-bold font-size-sm">Type :'+
+					'<span class="text-primary font-weight-bold"> '+res.data.type+'</span></span>'+
+					'</div>'+
+					'<div class="d-flex align-items-center py-lg-0 py-2">'+
+					'<a class="btn btn-light-success font-weight-bolder font-size-sm" onclick="getPatientDetails('+res.data.id+');" id="btn_select">Select</a>'+
+					'</div>'+
+					'</div>';
+
+
+				if (res.data.kids.length != 0) {
+					res.data.kids.forEach(kid => {
+					console.log(kid.name);
+
+					if (kid.gender == 'Male') {
+					var k_img = "assets/media/svg/avatars/001-boy.svg";
+					}else if (kid.gender == 'Female') {
+					var k_img = "assets/media/svg/avatars/018-girl-9.svg";
+					}
+
+					if (kid.dob != '') {
+              	  	var dob = kid.dob;
+					var age = new Date().getFullYear() - dob.split('-')[0]+' years old';
+              		}
+
+					textpatientlist = textpatientlist +
+					'<div class="d-flex flex-wrap align-items-center mb-7">'+
+					'<div class="symbol symbol-50 symbol-light mr-4">'+
+					'<div class="symbol-label" style="background-image: url('+k_img+')"></div>'+
+					'</div>'+
+					'<div class="d-flex flex-column flex-grow-1 my-lg-0 my-2 pr-3">'+
+					'<a href="" class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">'+kid.name+'</a>'+
+					'<span class="text-muted font-weight-bold font-size-sm my-1">'+age+'</span>'+
+					'<span class="text-muted font-weight-bold font-size-sm">Type :'+
+					'<span class="text-primary font-weight-bold"> Child</span></span>'+
+					'</div>'+
+					'<div class="d-flex align-items-center py-lg-0 py-2">'+
+						'<a class="btn btn-light-success font-weight-bolder font-size-sm" onclick="getPatientDetails('+kid.id+');" id="btn_select">Select</a>'+
+					'</div>'+
+					'</div>';
+
+					});
+					
+				}				
+
+			}
+
+				document.getElementById('patient_list').innerHTML=textpatientlist;
+				$('#patient_list').show('slow');
+
+        	}
+        	});
+
+		}
+		// ***************************************************************************************
+		</script>
+
+		<script>
+
+			function getPatientDetails(id){
+			
+			// set second tab available 
+			$('#btnNext').prop('disabled', false);
+			$('#AD').css('pointer-events', 'visible');
+
+			// Search patient
+			$.ajax({        
+        	url: 'http://nenotechnologies-001-site13.etempurl.com/api/patient/getpatientbyid?id='+id,
+        	type: 'GET',
+        	headers: {
+        	    AccessToken: '<%=current_user.accesstoken%>'
+        	}, 
+        	success: function(res) {
+        	    // console.log(res.data);	
+				$('#patient_list').hide('slow');
+				$('#patient_info').collapse('show');
+
+				$('#patient_id').val(res.data.id);
+				$('#name').val(res.data.name);
+				$('#nic').val(res.data.nic);
+				$('#dob').val(res.data.dob);
+				$('#gender').val(res.data.gender);
+				$('#contact').val(res.data.contact_number);
+				$('#address').val(res.data.address);
+
+        	}
+        	});
+
+			}			
+		</script>
+
+		<!--Sweetalert-->
+		<script src="assets/sweetalert/sweetalert2.all.min.js"></script>
+		<script>
+
+			$(document).ready(function() {
+				var success_msg = "<%=success_msg%>";
+				var error_msg = "<%=error_msg%>";
+
+				var number = "<%=data_num%>";
+				var name = "<%=data_name%>";
+				var date = "<%=data_date%>";
+
+				if (error_msg != "") {			
+            		swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: error_msg,
+					showConfirmButton: false,
+                	});
+
+        		}else if(success_msg != ""){
+					swal({
+						type: 'success',
+            			title: 'Saved',
+						text: success_msg,
+            			showCancelButton: true,
+            			confirmButtonText: 'Print Number',
+						confirmButtonColor: '#eb5bb1',
+            			cancelButtonText: 'Cancel',
+            			allowOutsideClick: false
+        			}).then((result) => {
+            			if (result.dismiss !== 'cancel') {
+							window.open("appointments/print_number/"+number+'&'+name+'&'+date, '_blank');
+            			} else {
+							window.location = "appointments/add_appointment";
+            			}
+        			})
+
+				}
+				
+			});
+		</script>
+
+	</body>
+	<!--end::Body-->
+</html>

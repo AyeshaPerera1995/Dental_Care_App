@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!--begin::Head-->
+	<head><base href="../../../">
+		<meta charset="utf-8" />
+		<title><%=sub_title%></title>
+		<meta name="description" content="User datatable listing" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Theme Styles(used by all pages)-->
+		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+        <style>
+			.aside-secondary-enabled.aside-fixed .wrapper {
+    			padding-left: 0;
+			}
+			.aside-secondary-enabled .aside {
+    			width: 0;
+			}	
+			.pt-md-27, .py-md-27 {
+    			padding-top: 10px !important;
+				padding-bottom: 10px !important;
+			}
+
+			@media print {
+              #printButton, #kt_scrolltop{
+                display: none;
+              }
+			}
+
+            header, .header-space{
+                height: 250px;
+                font-weight: bold;
+                width: 100%;
+                padding: 10pt;
+                /* margin: 10pt 0;  */
+            }
+
+            footer{
+                height: 50px;
+                font-weight: bold;
+                width: 100%;
+                padding: 10pt;
+                margin: 10pt 0;
+            }
+
+            header {
+                position: fixed;
+                top: 0;
+                background-color: white;
+                /* border-bottom: 1px solid black; */
+            }
+
+            footer {
+                position: fixed;
+                bottom: 0;
+                background-color: white;
+                /* border-top: 1px solid black; */
+            }
+		</style>
+	</head>
+	<!--end::Head-->
+
+	<!--begin::Body-->
+	<body id="kt_body" class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading">
+		
+	    <table>
+            <thead>
+            <tr>
+                <td>
+                <div class="header-space">&nbsp;</div>
+                </td>
+            </tr>
+            </thead>
+            <tbody><tr><td>
+                <div id="pageHost" class="content">
+    <!-- begin: Invoice body-->
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-separate table-head-custom table-checkable" id="incomeTable">
+                <thead>
+                  <tr>
+                    <th>Invoice No</th>
+                    <th>Date</th>
+                    <th>Created By</th>
+                    <th>Method</th>
+                    <th>Total Payable</th>
+                    <th>Paid Amount</th>
+                    <th>Balance</th>
+                  </tr>
+                </thead>
+                <tbody id="incomeHolder">
+                <% 
+                var cash_total = 0;
+                var card_total = 0;
+                var full_total = 0;
+                %>
+                  <% for(var i = 0 ; i < incomelist.length ; i++) { 
+
+                    if(incomelist[i].payment_method == 'Cash'){
+                        cash_total += parseInt(incomelist[i].paid_amount);
+                    }else  if(incomelist[i].payment_method == 'Card'){
+                        card_total += parseInt(incomelist[i].paid_amount);
+                    }
+              
+                    var date= incomelist[i].date;
+                    var invo_date = date.split('-')[2]+'-'+date.split('-')[1]+'-'+date.split('-')[0];
+                  %>
+                        <tr>
+                       <td class="pl-0 py-5"><span class="font-weight-bold"><%=incomelist[i].invoice_no%></span></td>		  
+                       <td class="pl-0 py-5"><span class="font-weight-bold"><%=invo_date%></span></td>	
+                       <td class="pl-0 py-5"><span class="font-weight-bold"><%=incomelist[i].created_by%></span></td>	
+                       <td class="pl-0 py-5"><span class="font-weight-bold"><%=incomelist[i].payment_method%></span></td>	
+                       <td class="pl-0 py-5"><span class="font-weight-bold" style="margin-left: 50px;"><%=incomelist[i].total_payable%>.00</span></td>	
+                       <td class="pl-0 py-5"><span class="font-weight-bold" style="margin-left: 50px;"><%=incomelist[i].paid_amount%></span></td>	
+                       <td class="pl-0 py-5"><span class="font-weight-bold" style="margin-left: 10px;"><%=incomelist[i].balance%></span></td>	
+                      </tr>
+                       <% } %>
+
+                </tbody>
+              </table>
+
+        </div>
+    </div><hr>
+    <!-- end: Invoice body-->
+    <div class="row">
+        <div class="col-md-8">
+            
+        </div>
+        <div class="col-md-4">
+            <div class="d-flex justify-content-between flex-column flex-md-row font-size-lg">
+                <div class="d-flex flex-column text-md-right mb-10 mb-md-0">
+                    <div class="font-weight-bolder font-size-lg mb-3"  style="color: black !important;">Card Payments</div>
+                    <div class="font-weight-bolder font-size-lg mb-3"  style="color: black !important;">Cash Payments</div>
+                    <div class="font-weight-bolder font-size-lg mb-3"  style="color: black !important;">Total Income</div>
+                    
+                </div>
+                <div class="d-flex flex-column text-md-right mb-10 mb-md-0" style="margin-right: 80px;">
+                    <span class="font-size-h6 font-weight-boldest mb-1"><%=card_total%>.00</span>
+                    <span class="font-size-h6 font-weight-boldest mb-1" style="border-bottom: 1px solid rgb(0, 0, 0);"><%=cash_total%>.00</span>
+                    <span class="font-size-h5 font-weight-boldest mb-1" style="color: black !important;"><%=(card_total+cash_total)%>.00</span>
+                </div>
+            </div>
+        </div>
+    </div><hr>
+    
+                </div>
+                <!-- <button type="button" id="printButton" class="btn btn-danger font-weight-bold" onclick="printReport();">Print Report</button> -->
+    
+            </td></tr></tbody>
+            <tfoot><tr><td>
+                <div class="footer-space">&nbsp;</div>
+            </td></tr></tfoot>
+        </table>
+       
+	</body>
+	<!--end::Body-->
+
+        <header id="pageHeader">
+            										<div class="row justify-content-center">
+											<!-- <div class="row justify-content-center bgi-size-cover bgi-no-repeat py-8 px-8 py-md-27 px-md-0" style="background-color: rgb(245, 65, 176);"> -->
+											<div class="col-md-12">
+												<div class="d-flex justify-content-between pb-10 flex-column flex-md-row" style="padding-bottom: 0px !important;">
+													<div class="display-4 text-black font-weight-boldest mb-10" style="font-size: 50px !important;">
+														<span style = "display: block; font-size: 30px; margin-left: 5px; line-height: 50px;">INVOICE</span>
+														
+														<span class="font-weight-bolder mb-2r" style = "display: block; font-size: 15px;font-weight: normal !important;">Contact : 0702 83 83 83</span>
+														<span class="font-weight-bolder mb-2r" style = "display: block; font-size: 15px;font-weight: normal !important;">	Address : No.83 Negombo Rd, Kurunegala 60000.</span>
+														<span class="font-weight-bolder mb-2r" style = "display: block; font-size: 15px;font-weight: normal !important;">	Email : info@totaldentalcare.lk</span>
+														<span class="font-weight-bolder mb-2r" style = "display: block; font-size: 15px;font-weight: normal !important;">	Web : www.totaldentalcare.lk</span>
+													</div>
+													<br>
+													
+													
+													<div class="d-flex flex-column align-items-md-end px-0">
+														<!--begin::Logo-->
+														<a href="#" class="mb-5">
+															<img src="assets/media/logos/tdc_logo.png" class="max-h-80px" alt="">
+														</a>
+														<!--end::Logo-->
+														<span class="text-black font-weight-bolder d-flex flex-column align-items-md-end opacity-70">
+															<span>Put On Your Best Smile Everyday!</span>
+														</span>
+													</div>
+												</div>
+												
+									
+												<div class="d-flex justify-content-between text-white" style="border-top: 1px solid black; padding-top: 10px;">
+
+													<div class="d-flex flex-column flex-root" style="color: black;">
+														<span class="font-weight-bolder mb-2r">Cashier</span>
+														<span><%=current_user.first_name%></span>														
+													</div>
+													<div class="d-flex flex-column flex-root" style="color: black;">
+														<span class="font-weight-bolder mb-2r">Report Date</span>
+														<span><%=select_date%></span>														
+													</div>
+                                                    <div class="d-flex flex-column flex-root" style="color: black;">
+														<span class="font-weight-bolder mb-2r">Issued Date</span>
+														<span><%=c_date%></span>														
+													</div>
+												</div>
+												<hr>
+											</div>
+										</div>
+        </header>
+
+        <footer id="pageFooter">
+            <span style="float: left; font-size: 9px !important; color: black !important;">Software Designed and developed by Neno technologies - 070 22 55 1 66</span>
+            <div class="row">
+                <div class="col-md-12" style="float: right;">
+                    <div class="d-flex justify-content-between">
+                        <button type="button" id="printButton" class="btn btn-danger font-weight-bold" onclick="printReport();">Print Report</button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+		
+
+		<!-- <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script> -->
+		<!--begin::Global Config(global config for global JS scripts)-->
+		<script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#6993FF", "warning": "#FFA800", "danger": "#e61794", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#E1E9FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
+		<!--end::Global Config-->
+		<!--begin::Global Theme Bundle(used by all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<script src="assets/js/pages/crud/datatables/basic/paginations.js"></script>
+
+	<script>
+		function printReport(){
+			window.print();
+			window. close();
+		}
+	</script>
+</html>

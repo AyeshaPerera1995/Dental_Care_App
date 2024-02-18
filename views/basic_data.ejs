@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!--begin::Head-->
+	<head><base href="../../../">
+		<meta charset="utf-8" />
+		<title><%=sub_title%></title>
+		<meta name="description" content="User datatable listing" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Theme Styles(used by all pages)-->
+		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+        <style>
+			.aside-secondary-enabled.aside-fixed .wrapper {
+    			padding-left: 0;
+			}
+			.aside-secondary-enabled .aside {
+    			width: 0;
+			}	
+		</style>
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading">
+		<!--begin::Main-->
+		<!-- MOBILE HEADER -->
+		<%- include('includes/mobile_header.ejs'); %>
+
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Page-->
+			<div class="d-flex flex-row flex-column-fluid page">
+
+                <!-- NAV BAR  -->
+                <%- include('includes/navbar.ejs'); %>
+
+				<!--begin::Wrapper-->
+				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+					<!--begin::Content-->
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+                        <!--begin::Subheader-->
+						<div class="subheader py-3 py-lg-8 subheader-transparent" id="kt_subheader">
+							<div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+							
+								<!-- HEADER  -->
+								<%- include('includes/header.ejs'); %>
+
+							</div>
+						</div>
+						<!--end::Subheader-->
+
+						<!--begin::Entry-->
+						<div class="d-flex flex-column-fluid">
+							<!--begin::Container-->
+							<div class="container">
+								<!--begin::Card-->
+                                <div class="card card-custom gutter-b">
+                                    <div class="card-header">
+                                        <div class="card-title">
+                                            <h3 class="card-label">Tabs</h3>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <!--begin::Example-->
+                                        <div class="example">
+                                            <div class="example-preview">
+                                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link active" id="brand-tab" data-toggle="tab" href="#brand">
+                                                            <span class="nav-icon">
+                                                                <i class="flaticon2-indent-dots"></i>
+                                                            </span>
+                                                            <span class="nav-text">Add Brand</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="category-tab" data-toggle="tab" href="#category" aria-controls="category">
+                                                            <span class="nav-icon">
+                                                                <i class="flaticon-layer"></i>
+                                                            </span>
+                                                            <span class="nav-text">Add Category</span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="url-tab" data-toggle="tab" href="#url" aria-controls="url">
+                                                            <span class="nav-icon">
+                                                                <i class="flaticon-edit-1"></i>
+                                                            </span>
+                                                            <span class="nav-text">Update PlayList URL</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <div class="tab-content mt-5" id="myTabContent">
+                                                    <!-- Tab 1  -->
+                                                    <div class="tab-pane fade active show" id="brand" role="tabpanel" aria-labelledby="brand-tab">
+                                                    <form action="basic_data/add_brand" method="post">
+                                                        <br><div class="form-group row">
+                                                            <div class="col-xl-9">
+                                                                <div class="input-group input-group-lg input-group-solid">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text">
+                                                                            <i class="flaticon2-indent-dots"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                <input class="form-control form-control-lg form-control-solid" autocomplete="off" type="text" name ="brand" placeholder="Brand Name"/>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <button class="col-xl-3 col-lg-3 btn-primary">Submit</button> -->
+                                                            <button type="submit" class="col-xl-1 btn btn-danger mr-2">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                       <div class="row">
+                                                           <div class="col-xl-10 pr-0">
+ <!-- start list  -->
+ <div class="card card-custom gutter-b card-stretch" style="border: 1px solid rgb(189, 189, 189);">
+    <!--begin::Header-->
+    <div class="card-header border-0" style="min-height: 15px;">
+        <h3 class="card-title" style="padding-top: 10px; color: rgb(238, 123, 181);">Brand List</h3>
+    </div>
+    <!--end::Header-->
+    <!--begin::Body-->
+    <div class="card-body pt-2">
+
+
+<!-- ********************************************************************************************* -->
+<% for(var i = 0 ; i < brandlist.length ; i++){ %>
+        <hr>	
+        <div class="d-flex flex-wrap align-items-center">
+            <div class="d-flex flex-column flex-grow-1 pr-3">
+                <a class="text-dark-75 text-hover-primary font-size-lg"><%=brandlist[i].brand_name%></a>
+            </div>
+            <div class="d-flex align-items-center py-lg-0 py-2">
+                <div class="d-flex flex-column">
+                    <% if(brandlist[i].Status == 'Active'){ %>
+                        <a href="/basic_data/set_brand_status/<%=brandlist[i].id%>&<%='In-Active'%>" class="label label-lg label-light label-inline font-weight-bold py-4" style="background: green; color: whitesmoke;">Active</a>
+                    <% } else{ %>
+                        <a href="/basic_data/set_brand_status/<%=brandlist[i].id%>&<%='Active'%>" class="label label-lg label-light label-inline font-weight-bold py-4" style="background: rgb(233, 79, 79); color: whitesmoke;">Deactive</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+<% } %>
+<!-- ******************************************************************************************************* -->
+
+    </div>
+    <!--end::Body-->
+</div>
+<!-- end list  -->
+                                                           </div>
+                                                       </div>
+
+                                                    </div>
+                                                    <!-- Tab 1  -->
+
+                                                    <!-- Tab 2  -->
+                                                    <div class="tab-pane fade" id="category" role="tabpanel" aria-labelledby="category-tab">
+                                                        <form action="basic_data/add_category" method="post">
+                                                            <br><div class="form-group row">
+                                                                <div class="col-lg-9 col-xl-9">
+                                                                    <div class="input-group input-group-lg input-group-solid">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">
+                                                                                <i class="flaticon-layer"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    <input class="form-control form-control-lg form-control-solid" autocomplete="off" type="text" name ="category" placeholder="Category Name"/>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <button class="col-xl-3 col-lg-3 btn-primary">Submit</button> -->
+                                                                <button type="submit" class="col-xl-1 col-lg-3 btn btn-danger mr-2">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                           <div class="row">
+                                                               <div class="col-xl-10 pr-0">
+     <!-- start list  -->
+     <div class="card card-custom gutter-b card-stretch" style="border: 1px solid rgb(189, 189, 189);">
+        <!--begin::Header-->
+        <div class="card-header border-0" style="min-height: 15px;">
+            <h3 class="card-title" style="padding-top: 10px; color: rgb(238, 123, 181);">Category List</h3>
+        </div>
+        <!--end::Header-->
+        <!--begin::Body-->
+        <div class="card-body pt-2">
+    
+    
+    <!-- ********************************************************************************************* -->
+    <% for(var i = 0 ; i < catlist.length ; i++){ %>
+        <hr>	
+        <div class="d-flex flex-wrap align-items-center">
+            <div class="d-flex flex-column flex-grow-1 pr-3">
+                <a class="text-dark-75 text-hover-primary font-size-lg"><%=catlist[i].Category_name%></a>
+            </div>
+            <div class="d-flex align-items-center py-lg-0 py-2">
+                <div class="d-flex flex-column">
+                    <% if(catlist[i].Status == 'Active'){ %>
+                        <a href="/basic_data/set_cat_status/<%=catlist[i].id%>&<%='In-Active'%>" class="label label-lg label-light label-inline font-weight-bold py-4" style="background: green; color: whitesmoke;">Active</a>
+                    <% } else{ %>
+                        <a href="/basic_data/set_cat_status/<%=catlist[i].id%>&<%='Active'%>" class="label label-lg label-light label-inline font-weight-bold py-4" style="background: rgb(233, 79, 79); color: whitesmoke;">Deactive</a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+<% } %>
+
+    <!-- ******************************************************************************************************* -->
+    
+        </div>
+        <!--end::Body-->
+    </div>
+    <!-- end list  -->
+                                                               </div>
+                                                           </div>
+                                                    </div>
+                                                    <!-- Tab 2  -->
+
+                                                    <!-- Tab 3  -->
+                                                    <div class="tab-pane fade" id="url" role="tabpanel" aria-labelledby="url-tab">
+
+
+                                                        <div class="d-flex align-items-center bg-light-warning rounded p-5 mb-9">
+                                                            <!--begin::Icon-->
+                                                            <span class="svg-icon svg-icon-warning mr-5">
+                                                                <span class="svg-icon svg-icon-4x">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                        <rect x="0" y="0" width="24" height="24"/>
+                                                                        <circle fill="#000000" opacity="0.3" cx="12" cy="12" r="10"/>
+                                                                        <rect fill="#000000" x="11" y="7" width="2" height="8" rx="1"/>
+                                                                        <rect fill="#000000" x="11" y="16" width="2" height="2" rx="1"/>
+                                                                    </g>
+                                                                </svg><!--end::Svg Icon--></span>
+                                                            </span>
+                                                            <!--end::Icon-->
+
+                                                            <!--begin::Title-->
+                                                            <div class="d-flex flex-column flex-grow-1 mr-2">
+                                                                <a class="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">Play List URL should be in following format.</a>
+                                                                <span class="text-muted font-weight-bold" style="font-size: 14px;">https://www.youtube.com/playlist?list=<span style="color: palevioletred;">[PLAYLIST_ID]</span></span>
+                                                            </div>
+                                                            <!--end::Title-->
+                                                        </div>
+
+
+
+
+                                                        <form action="basic_data/set_url" method="post">
+                                                            <br><div class="form-group row">
+                                                                <div class="col-lg-9 col-xl-9">
+                                                                    <div class="input-group input-group-lg input-group-solid">
+                                                                        <div class="input-group-prepend">
+                                                                            <span class="input-group-text">
+                                                                                <i class="flaticon-edit-1"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    <input class="form-control form-control-lg form-control-solid" autocomplete="off" type="text" name ="url" placeholder="Enter Playlist ID"/>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- <button class="col-xl-3 col-lg-3 btn-primary">Submit</button> -->
+                                                                <button type="submit" class="col-xl-2 col-lg-3 btn btn-danger mr-2">Update URL</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <!-- Tab 3  -->
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <!--end::Example-->
+                                    </div>
+                                </div>
+								<!--end::Card-->
+							</div>
+							<!--end::Container-->
+						</div>
+						<!--end::Entry-->
+					</div>
+					<!--end::Content-->
+					
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>
+		<!--end::Main-->
+		
+		<!--begin::Scrolltop-->
+		<div id="kt_scrolltop" class="scrolltop">
+			<span class="svg-icon">
+				<!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg-->
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+					<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+						<polygon points="0 0 24 0 24 24 0 24" />
+						<rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1" />
+						<path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fill-rule="nonzero" />
+					</g>
+				</svg>
+				<!--end::Svg Icon-->
+			</span>
+		</div>
+		<!--end::Scrolltop-->
+
+		<!-- <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script> -->
+		<!--begin::Global Config(global config for global JS scripts)-->
+		<script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#6993FF", "warning": "#FFA800", "danger": "#e61794", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#E1E9FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
+		<!--end::Global Config-->
+		<!--begin::Global Theme Bundle(used by all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<script src="assets/js/pages/crud/datatables/basic/paginations.js"></script>
+
+		<!--end::Page Scripts-->
+
+        <!--Sweetalert-->
+ 		<script src="assets/sweetalert/sweetalert2.all.min.js"></script>
+         <script>
+             $(document).ready(function() {
+                 var success_msg = "<%=success_msg%>";
+                 var error_msg = "<%=error_msg%>";
+ 
+                 if (error_msg != "") {			
+                     swal({
+                     type: 'error',
+                     title: 'Error',
+                     text: error_msg,
+                     timer: 3000,
+                     showConfirmButton: false,
+                     });
+ 
+                 }else if(success_msg != ""){
+                    swal({
+                     type: 'success',
+                     title: 'Saved',
+                     text: success_msg,
+                     showConfirmButton: true,
+                     confirmButtonColor: '#eb5bb1',
+                     });
+ 
+                 }
+                 
+             });
+         </script>
+
+	</body>
+	<!--end::Body-->
+</html>

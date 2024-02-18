@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+	<!--begin::Head-->
+	<head><base href="../../../">
+		<meta charset="utf-8" />
+		<title><%=sub_title%></title>
+		<meta name="description" content="User datatable listing" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Theme Styles(used by all pages)-->
+		<link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css" />
+
+		<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />
+        <style>
+			.aside-secondary-enabled.aside-fixed .wrapper {
+    			padding-left: 0;
+			}
+			.aside-secondary-enabled .aside {
+    			width: 0;
+			}
+		</style>
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="header-mobile-fixed subheader-enabled aside-enabled aside-fixed aside-secondary-enabled page-loading">
+		<!--begin::Main-->
+		<!-- MOBILE HEADER -->
+		<%- include('includes/mobile_header.ejs'); %>
+
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Page-->
+			<div class="d-flex flex-row flex-column-fluid page">
+
+                <!-- NAV BAR  -->
+                <%- include('includes/navbar.ejs'); %>
+
+				<!--begin::Wrapper-->
+				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+					<!--begin::Content-->
+					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+                        <!--begin::Subheader-->
+						<div class="subheader py-3 py-lg-8 subheader-transparent" id="kt_subheader">
+							<div class="container d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+							
+								<!-- HEADER  -->
+								<%- include('includes/header.ejs'); %>
+
+							</div>
+						</div>
+						<!--end::Subheader-->
+
+						<!--begin::Entry-->
+						<div class="d-flex flex-column-fluid">
+							<!--begin::Container-->
+							<div class="container">
+
+								<!-- <%- include ("includes/messages"); %> -->
+
+                             <!--begin::Form-->
+                                 <form class="form" id="patient_form" method="post" action="/patients/add_patient">
+								<!--begin::Card-->
+                                <div class="card card-custom card-stretch">
+                                    
+                                    <!--begin::Header-->
+                                    <div class="card-header py-3">
+                                        <div class="card-title align-items-start flex-column">
+                                            <span class="text-muted font-weight-bold">Add <%=sub_title%></span>
+                                        </div>
+										<div class="card-toolbar">
+											<div class="input-group-prepend">
+												<span class="input-group-text">
+													<i class="la la-user-injured"></i>
+												</span>
+											</div>
+                                        </div>
+                                    </div>
+                                    <!--end::Header-->
+                                   
+                                        <!--begin::Body-->
+                                        <div class="card-body">  
+											<input type="hidden" value="<%=current_user.accesstoken%>" name="accessToken"> 
+											
+											<div class="form-group row">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Patient Type</label>
+												<div class="col-lg-9 col-xl-6">
+                                                <div class="radio-inline">
+														<label class="radio radio-solid" data-toggle="collapse" data-target="">
+														<input type="radio" name="type" value="Adult" id="ad"/>
+														<span></span>Adult</label>
+														<label class="radio radio-solid" data-toggle="collapse" data-target="">
+														<input type="radio" name="type" value="Child" id="ch"/>
+														<span></span>Child</label>
+													</div>
+													<span class="form-text text-muted">Select if the patient is an Adult or a Child</span>
+												</div>
+                                            </div>
+											<div class="form-group row" style="margin-bottom:0;">
+                                                <label class="col-xl-3 col-lg-3 col-form-label">Search By</label>
+												<div class="col-lg-9 col-xl-6">
+                                                	<div class="radio-inline">
+														<label class="radio radio-solid">
+														<input type="radio" name="search_by" value="NIC" id="ad"/>
+														<span></span>NIC</label>
+														<label class="radio radio-solid">
+														<input type="radio" name="search_by" value="Phone"/>
+														<span></span>Phone</label>
+													</div>
+													<span class="form-text" id="searchRadioBtn" style="color: red;"></span><br>
+												</div>
+                                            </div>
+
+											<!-- Adult collapse  -->
+											<div id="adult" class="collapse">
+
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">&nbsp;</label>
+													<div class="col-lg-9 col-xl-5">													
+														<input class="form-control form-control-lg form-control-solid" type="text" name ="search_nic_phone" id="search_nic_phone" placeholder="Search"/> 
+														<span class="form-text" id="msg" style="font-size: 14px; font-weight: bold; font-family: monospace;"></span>
+													</div>&nbsp;&nbsp;&nbsp;&nbsp;
+													<div class="col-lg-9 col-xl-1">													
+														<a href="#" class="btn btn-icon btn-default btn-hover-primary ml-2 h-40px w-40px flex-shrink-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="searchByNICOrPhone();">
+															<span class="svg-icon svg-icon-lg">
+																<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																	<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+																		<rect x="0" y="0" width="24" height="24"></rect>
+																		<path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+																		<path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"></path>
+																	</g>
+																</svg>
+															</span>
+														</a>	
+													</div>	
+												</div>	
+												
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">Patient Name</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="input-group input-group-lg input-group-solid">
+															<div class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="la la-user-injured"></i>
+																</span>
+															</div>
+														<input class="form-control form-control-lg form-control-solid set-disable" type="text" name ="ap_name" id="ap_name" placeholder="Patient Name"/>
+														</div>
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">NIC</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="input-group input-group-lg input-group-solid">
+															<div class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="la la-address-card"></i>
+																</span>
+															</div>
+														<input class="form-control form-control-lg form-control-solid set-disable" type="text" name ="ap_nic" id="ap_nic" placeholder="NIC"/>
+														</div>
+													</div>
+												</div>
+												
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">DOB</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="input-group input-group-lg input-group-solid">
+															<div class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="la la-eyedropper"></i>
+																</span>
+															</div>
+														<input class="form-control form-control-lg form-control-solid set-disable" type="date" name ="ap_dob" placeholder="Patient NIC"/>
+														</div>
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">Gender</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="radio-inline">
+															<label class="radio radio-solid">
+															<input class="set-disable" type="radio" name="ap_gender" id="male" value="Male" />
+															<span></span>Male</label>
+															<label class="radio radio-solid set-disable">
+															<input class="set-disable" type="radio" name="ap_gender" id="female" value="Female" />
+															<span></span>Female</label>
+														</div>
+													</div>
+												</div>
+
+												<hr>
+												<div class="row">
+													<!-- <label class="col-xl-3"></label> -->
+													<div class="col-lg-9 col-xl-6">
+														<h6 class="font-weight-bold">Contact Information</h6>
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">Contact Number</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="input-group input-group-lg input-group-solid">
+															<div class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="la la-phone"></i>
+																</span>
+															</div>
+															<input type="text" class="form-control form-control-lg form-control-solid set-disable" name="ap_contact" id="ap_contact"placeholder="Phone" />
+														</div>
+														
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">Address</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="input-group input-group-lg input-group-solid">
+															<div class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="la la-map-marker"></i>
+																</span>
+															</div>
+															<input type="text" class="form-control form-control-lg form-control-solid set-disable" name="ap_address" placeholder="Address" />
+														</div>
+													</div>
+												</div>
+
+											</div>
+											<!-- Adult collapse  -->
+
+                                           
+
+											
+
+											
+
+											<!-- Child collapse  -->
+											<div id="child" class="collapse">
+
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">&nbsp;</label>
+													<div class="col-lg-9 col-xl-5">													
+														<input class="form-control form-control-lg form-control-solid" type="text" name ="search_parent_nic_phone" id="search_parent_nic_phone" placeholder="Search"/> 
+														<span class="form-text" id="child_msg" style="font-size: 14px; font-weight: bold; font-family: monospace;"></span>
+													</div>&nbsp;&nbsp;&nbsp;&nbsp;
+													<div class="col-lg-9 col-xl-1">													
+														<a href="#" class="btn btn-icon btn-default btn-hover-primary ml-2 h-40px w-40px flex-shrink-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="searchByParentNICOrPhone();">
+															<span class="svg-icon svg-icon-lg">
+																<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+																	<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+																		<rect x="0" y="0" width="24" height="24"></rect>
+																		<path d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"></path>
+																		<path d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z" fill="#000000" fill-rule="nonzero"></path>
+																	</g>
+																</svg>
+															</span>
+														</a>	
+													</div>	
+												</div>	
+
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">Parent Name</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="input-group input-group-lg input-group-solid">
+															<div class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="la la-user-alt"></i>
+																</span>
+															</div>
+														<input class="form-control form-control-lg form-control-solid set-disable" type="text" name ="parent_name" placeholder="Parent Name"/>
+													</div>    
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">NIC</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="input-group input-group-lg input-group-solid">
+															<div class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="la la-address-card"></i>
+																</span>
+															</div>
+														<input class="form-control form-control-lg form-control-solid set-disable" type="text" name ="parent_nic" id="parent_nic" placeholder="NIC"/>
+														</div>
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">Contact Number</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="input-group input-group-lg input-group-solid">
+															<div class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="la la-phone"></i>
+																</span>
+															</div>
+															<input type="text" class="form-control form-control-lg form-control-solid set-disable" name="parent_contact" id="parent_contact" placeholder="Phone" />
+														</div>
+														
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">Address</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="input-group input-group-lg input-group-solid">
+															<div class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="la la-map-marker"></i>
+																</span>
+															</div>
+															<input type="text" class="form-control form-control-lg form-control-solid set-disable" name="parent_address" placeholder="Address" />
+														</div>
+													</div>
+												</div>
+
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label"><b>Child List</b></label>
+													<div class="col-lg-9 col-xl-6">
+												<!-- list view  -->
+												<div class="card card-custom card-stretch" style="background-color:transparent; border: rgb(196, 194, 194) solid 1px;">
+													<!--begin::Body-->
+													<div class="card-body pt-2" id="child_list">
+													</div>
+													<!--end::Body-->
+												</div>
+												<!-- list view  -->
+													</div>
+												</div>
+
+												<hr>
+												<div class="row">
+													<!-- <label class="col-xl-3"></label> -->
+													<div class="col-lg-9 col-xl-6">
+														<h6 class="font-weight-bold">Add New Child</h6>
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">Child Name *</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="input-group input-group-lg input-group-solid">
+															<div class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="la la-user-injured"></i>
+																</span>
+															</div>
+															<input type="text" class="form-control form-control-lg form-control-solid" name="child_name" placeholder="Child Name" />
+														</div>
+														
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">DOB *</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="input-group input-group-lg input-group-solid">
+															<div class="input-group-prepend">
+																<span class="input-group-text">
+																	<i class="la la-eyedropper"></i>
+																</span>
+															</div>
+															<input type="date" class="form-control form-control-lg form-control-solid" name="child_dob"/>
+														</div>
+													</div>
+												</div>
+												<div class="form-group row">
+													<label class="col-xl-3 col-lg-3 col-form-label">Gender *</label>
+													<div class="col-lg-9 col-xl-6">
+														<div class="radio-inline">
+															<label class="radio radio-solid">
+															<input type="radio" name="child_gender" id="male" value="Male" />
+															<span></span>Male</label>
+															<label class="radio radio-solid set-disable">
+															<input type="radio" name="child_gender" id="female" value="Female" />
+															<span></span>Female</label>
+														</div>
+													</div>
+												</div>
+
+												<hr>
+												
+
+
+											</div>
+											<!-- Child collapse  -->
+
+
+
+
+                                        </div>
+                                        <!--end::Body-->
+
+										<div class="card-footer">
+                                            <div style="float: right;">
+												<button type="submit" class="btn btn-danger mr-2" id="savePatientBtn">Save Patient</button>
+                                            	<button type="reset" class="btn btn-secondary">Cancel</button>
+											</div>
+                                        </div>
+                                   
+                                </div>
+								<!--end::Card-->
+                            </form>
+                            <!--end::Form-->
+                                
+							</div>
+							<!--end::Container-->
+						</div>
+						<!--end::Entry-->
+					</div>
+					<!--end::Content-->
+					
+				</div>
+				<!--end::Wrapper-->
+			</div>
+			<!--end::Page-->
+		</div>
+		<!--end::Main-->
+		
+		<!--begin::Scrolltop-->
+		<div id="kt_scrolltop" class="scrolltop">
+			<span class="svg-icon">
+				<!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg-->
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+					<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+						<polygon points="0 0 24 0 24 24 0 24" />
+						<rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1" />
+						<path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z" fill="#000000" fill-rule="nonzero" />
+					</g>
+				</svg>
+				<!--end::Svg Icon-->
+			</span>
+		</div>
+		<!--end::Scrolltop-->
+
+		<!-- <script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script> -->
+		<!--begin::Global Config(global config for global JS scripts)-->
+		<script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#6993FF", "warning": "#FFA800", "danger": "#e61794", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#E1E9FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
+		<!--end::Global Config-->
+		<!--begin::Global Theme Bundle(used by all pages)-->
+		<script src="assets/plugins/global/plugins.bundle.js"></script>
+		<script src="assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+		<script src="assets/js/scripts.bundle.js"></script>
+		<script src="assets/plugins/custom/datatables/datatables.bundle.js"></script>
+		<script src="assets/js/pages/crud/datatables/basic/paginations.js"></script>
+
+
+		<script>
+
+		$('[name="type"]').on('change', function() {  
+  			if($(this).val() === "Adult") {
+  			  	$('#adult').collapse('show');
+			  	$('#child').collapse('hide');
+
+  			} else {
+				$('#adult').collapse('hide');
+			  	$('#child').collapse('show');
+  			}
+		});
+
+		$(".set-disable").prop("readonly", true);
+		$("#ad").prop('checked', true);
+		$('#adult').collapse('show');
+		$('#child_list').html('<span class="text-muted">No Data Available</span>');
+
+
+		// ***************************************************************************************
+		function searchByNICOrPhone(){
+			var search_nic_phone = $('#search_nic_phone').val();
+			var search_by = $('input[name="search_by"]:checked').val();
+			console.log(search_by);
+
+			// check if the nic or phone radio btns selected 
+			if (search_by == undefined) {
+				$("#searchRadioBtn").text("Please select one.");
+			}else{
+		
+			// Search adult
+        	$.ajax({        
+        	url: 'http://nenotechnologies-001-site13.etempurl.com/api/patient/PatientByNICANDType?nic='+search_nic_phone+'&type=Adult',
+        	type: 'GET',
+        	headers: {
+        	    AccessToken: '<%=current_user.accesstoken%>'
+        	}, 
+        	success: function(res) {
+        	    // console.log(res.data.type);	
+				if(res.data.type != null){
+				// have result
+				$("#msg").text("This Patient is already exist!");
+				$('#msg').css('color', 'red');
+				$(".set-disable").prop("readonly", true);
+				$("#searchRadioBtn").text("");
+				$('#search_nic_phone').val("");
+				$('#ap_nic').val("");
+				$('#ap_contact').val("");
+				// $('#msg').fadeIn().delay(5000).fadeOut();
+				
+				}else{
+				//no result
+				$("#msg").text("Please fill following details.");
+				$('#msg').css('color', 'green');
+				$('#ap_nic').val("");
+				$('#ap_contact').val("");
+				if (search_by == "NIC") {
+					$('#ap_nic').val(search_nic_phone);
+				}else{
+					$('#ap_contact').val(search_nic_phone);
+				}
+				
+				$('#search_nic_phone').val("");
+				$("#searchRadioBtn").text("");
+				$(".set-disable").prop("readonly", false);
+				}
+
+        	}
+        	});
+
+			}
+
+		}
+		// ***************************************************************************************
+
+
+
+		// ***************************************************************************************
+		function searchByParentNICOrPhone(){
+			var search_parent_nic_phone = $('#search_parent_nic_phone').val();
+			var search_by = $('input[name="search_by"]:checked').val();
+			var childlist = "";
+
+			console.log(search_by);
+		
+			// check if the nic or phone radio btns selected 
+			if (search_by == undefined) {
+				$("#searchRadioBtn").text("Please select one.");
+			}else{
+			// Search DB data
+			$.ajax({        
+        	url: 'http://nenotechnologies-001-site13.etempurl.com/api/patient/PatientByNICANDType?nic='+search_parent_nic_phone+'&type=Adult',
+        	type: 'GET',
+        	headers: {
+        	    AccessToken: '<%=current_user.accesstoken%>'
+        	}, 
+        	success: function(res) {
+        	    console.log(res.data.kids);	
+				if(res.data.type != null){
+					// have Parent NIC
+					$("#child_msg").text("Parent ID already exist. Please fill following details.");
+					$('#child_msg').css('color', 'green');
+					$(".set-disable").prop("readonly", true);
+					$('#search_parent_nic_phone').val("");
+
+					// set data to fileds 
+					$('[name="parent_name"]').val(res.data.name); 
+					$('[name="parent_nic"]').val(res.data.nic); 
+					$('[name="parent_contact"]').val(res.data.contact_number); 
+					$('[name="parent_address"]').val(res.data.address); 
+
+					// set child list 
+					var kidObjts = res.data.kids;
+                	console.log(kidObjts.length);
+
+                	kidObjts.forEach(kid => {
+
+						if (kid.gender == 'Male') {
+							var img = '001-boy.svg';
+						}else{
+							var img = '018-girl-9.svg';
+						}
+
+						var dob = kid.dob;
+						var age = new Date().getFullYear() - dob.split('-')[0];
+
+						childlist= childlist+ " "+ 
+						'<div class="d-flex align-items-center">'+
+						'<div class="symbol symbol-40 symbol-light-success mr-5">'+
+						'<span class="symbol-label">'+
+						'<img src="assets/media/svg/avatars/'+img+'" class="h-75 align-self-end" alt="">'+
+						'</span>'+
+						'</div>'+
+						'<div class="d-flex flex-column flex-grow-1 font-weight-bold">'+
+						'<a href="#" class="text-dark text-hover-primary mb-1 font-size-lg">'+kid.name+'</a>'+
+						'<span class="text-muted">'+age+' years old</span>'+
+						'</div>'+
+						'<div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title="" data-placement="top" data-original-title="More">'+
+						'<a href="#" class="btn btn-hover-light-primary btn-sm btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+						'<i class="ki ki-bold-more-hor"></i>'+
+						'</a>'+
+						'<div class="dropdown-menu p-0 m-0 dropdown-menu-md dropdown-menu-right">'+
+						'<ul class="navi navi-hover">'+							
+						'<li class="navi-item">'+
+						'<a href="#" class="navi-link">'+
+						'<span class="navi-text">'+
+						'<span class="label label-xl label-inline label-primary">Remove</span>'+
+						'</span>'+
+						'</a>'+
+						'</li>'+
+						'</ul>'+
+						'</div>'+
+						'</div>'+
+						'</div><br><hr>'
+					});
+
+					document.getElementById('child_list').innerHTML=childlist;
+				
+				}else{
+					//no Parent NIC
+					$("#child_msg").text("Please fill following details.");
+					$('#child_msg').css('color', 'green');
+					$('#search_parent_nic_phone').val("");
+					$('[name="parent_name"]').val(""); 
+					$('[name="parent_nic"]').val(""); 
+					$('[name="parent_contact"]').val(""); 
+					$('[name="parent_address"]').val(""); 
+					$('#child_list').html('<span class="text-muted">No Data Available</span>');
+					$(".set-disable").prop("readonly", false);
+
+					$('#parent_nic').val("");
+					$('#parent_contact').val("");
+					if (search_by == "NIC") {
+						$('#parent_nic').val(search_parent_nic_phone);
+					}else{
+						$('#parent_contact').val(search_parent_nic_phone);
+					}
+				}
+				
+			}
+			});
+
+			}
+			
+		}
+		// ***************************************************************************************
+
+		</script>
+
+		<!--Sweetalert-->
+		<script src="assets/sweetalert/sweetalert2.all.min.js"></script>
+		<script>
+
+			$(document).ready(function() {					
+				var success_msg = "<%=success_msg%>";
+				var error_msg = "<%=error_msg%>";
+
+				if (error_msg != "") {			
+            		swal({
+                    type: 'error',
+                    title: 'Error',
+                    text: error_msg,
+					timer: 2500,
+					showConfirmButton: false,
+                	});
+
+        		}else if(success_msg != ""){
+					swal({
+						title: 'Saved',
+  						text: success_msg,
+  						type: 'success',
+  						confirmButtonColor: '#eb5bb1',
+  						confirmButtonText: 'New Appointment',
+						showCancelButton: true,
+						cancelButtonText: 'Cancel',
+						}).then((result) => {
+            			if (result.dismiss !== 'cancel') {
+						   
+							window.location = "appointments/add_appointment";
+            			} else {
+							window.location = "patients/add_patient";
+            			}
+        				})						
+				}				
+			});
+		</script>
+
+		<!--end::Page Scripts-->
+	</body>
+	<!--end::Body-->
+</html>
